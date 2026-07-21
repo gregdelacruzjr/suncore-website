@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Get Your Solar Quote</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --ink: #0e1729;
+        --panel: #141f38;
+        --panel-2: #1b2a48;
+        --line: rgba(232, 236, 244, 0.08);
+        --sun: #ffb238;
+        --sun-2: #ffcf7a;
+        --dawn: #ff7a59;
+        --sky: #4fd1c5;
+        --mist: #e8ecf4;
+        --muted: #8fa0c0;
+        --danger: #ff6b6b;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: radial-gradient(
+            60% 50% at 15% -10%,
+            rgba(255, 178, 56, 0.1),
+            transparent 60%
+          ),
+          radial-gradient(
+            50% 40% at 100% 0%,
+            rgba(79, 209, 197, 0.08),
+            transparent 60%
+          ),
+          var(--ink);
+        color: var(--mist);
+        font-family: "Inter", sans-serif;
+        min-height: 100vh;
+      }
+      .wrap {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 32px 16px;
+      }
+      .card {
+        width: 100%;
+        max-width: 560px;
+        background: linear-gradient(180deg, var(--panel), var(--panel-2));
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 36px 32px 32px;
+        box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.6);
+        position: relative;
+        overflow: hidden;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 22px;
+      }
+      .brand-mark {
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        background: conic-gradient(
+          from 220deg,
+          var(--sun),
+          var(--dawn),
+          var(--sun)
+        );
+        box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+      }
+      .brand-name {
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        letter-spacing: 0.02em;
+        color: var(--mist);
+      }
+
+      /* Signature: sunrise charge arc */
+      .arc-row {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 26px;
+      }
+      .arc-svg {
+        width: 64px;
+        height: 64px;
+        flex: none;
+      }
+      .arc-track {
+        stroke: rgba(232, 236, 244, 0.1);
+        stroke-width: 6;
+        fill: none;
+      }
+      .arc-fill {
+        stroke: url(#sunGradient);
+        stroke-width: 6;
+        fill: none;
+        stroke-linecap: round;
+        transition: stroke-dashoffset 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .arc-sun {
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        transform-origin: 32px 32px;
+      }
+      .arc-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .arc-label {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 12px;
+        letter-spacing: 0.03em;
+        color: var(--sun-2);
+      }
+      .arc-title {
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 600;
+        font-size: 17px;
+        color: var(--mist);
+      }
+
+      .step {
+        display: none;
+        animation: rise 0.4s ease;
+      }
+      .step.active {
+        display: block;
+      }
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .step-eyebrow {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--sky);
+        margin-bottom: 6px;
+      }
+      h2 {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 22px;
+        font-weight: 600;
+        margin: 0 0 6px;
+        color: var(--mist);
+      }
+      .step-sub {
+        color: var(--muted);
+        font-size: 14px;
+        margin: 0 0 24px;
+        line-height: 1.5;
+      }
+
+      .field {
+        margin-bottom: 16px;
+      }
+      label {
+        display: block;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--muted);
+        margin-bottom: 7px;
+      }
+      input[type="text"],
+      input[type="email"],
+      input[type="number"],
+      textarea {
+        width: 100%;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 12px 14px;
+        color: var(--mist);
+        font-family: "Inter", sans-serif;
+        font-size: 14.5px;
+        outline: none;
+        transition: border-color 0.2s, background 0.2s;
+      }
+      input::placeholder,
+      textarea::placeholder {
+        color: #5c6c8c;
+      }
+      input:focus,
+      textarea:focus {
+        border-color: var(--sun);
+        background: rgba(255, 178, 56, 0.05);
+      }
+      input:focus-visible,
+      textarea:focus-visible,
+      button:focus-visible,
+      .choice:focus-visible {
+        outline: 2px solid var(--sky);
+        outline-offset: 2px;
+      }
+      textarea {
+        resize: vertical;
+        min-height: 88px;
+        font-family: "Inter", sans-serif;
+      }
+
+      .kwh-row {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .kwh-input {
+        width: 120px;
+        font-family: "IBM Plex Mono", monospace;
+        font-weight: 600;
+        text-align: center;
+      }
+      input[type="range"] {
+        flex: 1;
+        accent-color: var(--sun);
+        height: 4px;
+      }
+      .kwh-unit {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 12px;
+        color: var(--muted);
+        white-space: nowrap;
+      }
+
+      .choice-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .choice-grid.three {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+      .choice {
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 12px;
+        padding: 14px 10px;
+        text-align: center;
+        cursor: pointer;
+        transition: border-color 0.15s, background 0.15s, transform 0.15s;
+        color: var(--mist);
+      }
+      .choice:hover {
+        border-color: rgba(255, 178, 56, 0.4);
+        transform: translateY(-1px);
+      }
+      .choice.selected {
+        border-color: var(--sun);
+        background: linear-gradient(
+          180deg,
+          rgba(255, 178, 56, 0.14),
+          rgba(255, 178, 56, 0.04)
+        );
+      }
+      .choice-icon {
+        font-size: 20px;
+        display: block;
+        margin-bottom: 6px;
+      }
+      .choice-label {
+        font-size: 13px;
+        font-weight: 500;
+      }
+
+      .error-text {
+        color: var(--danger);
+        font-size: 12.5px;
+        margin-top: 6px;
+        display: none;
+      }
+      .field.invalid input,
+      .field.invalid textarea {
+        border-color: var(--danger);
+      }
+      .field.invalid .error-text {
+        display: block;
+      }
+
+      .nav-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 28px;
+        gap: 12px;
+      }
+      button {
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 600;
+        font-size: 14.5px;
+        border-radius: 10px;
+        padding: 12px 20px;
+        cursor: pointer;
+        border: none;
+        transition: transform 0.15s, opacity 0.15s;
+      }
+      button:active {
+        transform: scale(0.97);
+      }
+      .btn-primary {
+        background: linear-gradient(135deg, var(--sun), var(--dawn));
+        color: #1a1000;
+        margin-left: auto;
+      }
+      .btn-primary:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+      .btn-ghost {
+        background: transparent;
+        color: var(--muted);
+        border: 1px solid var(--line);
+      }
+      .btn-ghost:hover {
+        color: var(--mist);
+        border-color: rgba(232, 236, 244, 0.2);
+      }
+
+      .review-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 8px;
+      }
+      .review-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 11px 14px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        font-size: 13.5px;
+      }
+      .review-key {
+        color: var(--muted);
+      }
+      .review-val {
+        color: var(--mist);
+        font-weight: 500;
+        text-align: right;
+      }
+
+      .submit-status {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 12.5px;
+        color: var(--danger);
+        margin-top: 10px;
+        display: none;
+      }
+
+      .success {
+        text-align: center;
+        padding: 20px 4px 4px;
+      }
+      .success-mark {
+        width: 56px;
+        height: 56px;
+        margin: 0 auto 18px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at 35% 30%,
+          var(--sun-2),
+          var(--dawn)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+        box-shadow: 0 10px 30px -8px rgba(255, 178, 56, 0.5);
+      }
+      .success h2 {
+        margin-bottom: 8px;
+      }
+      .success p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      @media (max-width: 480px) {
+        .card {
+          padding: 28px 20px 24px;
+          border-radius: 16px;
+        }
+        .choice-grid.three {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .step {
+          animation: none;
+        }
+        .arc-fill,
+        .arc-sun {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="card">
+        <div class="brand">
+          <div class="brand-mark"></div>
+          <div class="brand-name">SunLine Energy</div>
+        </div>
+
+        <div class="arc-row">
+          <svg class="arc-svg" viewBox="0 0 64 64">
+            <defs>
+              <linearGradient
+                id="sunGradient"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="100%"
+              >
+                <stop offset="0%" stop-color="#FFCF7A" />
+                <stop offset="100%" stop-color="#FF7A59" />
+              </linearGradient>
+            </defs>
+            <circle class="arc-track" cx="32" cy="32" r="26" />
+            <circle
+              id="arcFill"
+              class="arc-fill"
+              cx="32"
+              cy="32"
+              r="26"
+              stroke-dasharray="163.36"
+              stroke-dashoffset="163.36"
+              transform="rotate(-90 32 32)"
+            />
+            <text
+              id="arcSun"
+              class="arc-sun"
+              x="32"
+              y="37"
+              text-anchor="middle"
+              font-size="16"
+            >
+              ☀️
+            </text>
+          </svg>
+          <div class="arc-meta">
+            <div class="arc-label" id="arcLabel">CHARGE 25%</div>
+            <div class="arc-title" id="arcTitle">Step 1 of 4</div>
+          </div>
+        </div>
+
+        <form id="funnelForm" novalidate>
+          <!-- STEP 1: Contact -->
+          <div class="step active" data-step="1">
+            <div class="step-eyebrow">Let's start with you</div>
+            <h2>Who are we powering up?</h2>
+            <p class="step-sub">
+              We'll use this to send your custom solar quote.
+            </p>
+
+            <div class="field" id="field-fullName">
+              <label for="fullName">Full name</label>
+              <input
+                type="text"
+                id="fullName"
+                placeholder="Juan Dela Cruz"
+                autocomplete="name"
+              />
+              <div class="error-text">Please enter your full name.</div>
+            </div>
+
+            <div class="field" id="field-email">
+              <label for="email">Email address</label>
+              <input
+                type="email"
+                id="email"
+                placeholder="you@email.com"
+                autocomplete="email"
+              />
+              <div class="error-text">Please enter a valid email address.</div>
+            </div>
+
+            <div class="field" id="field-address">
+              <label for="address">Property address</label>
+              <input
+                type="text"
+                id="address"
+                placeholder="Street, City, Province"
+                autocomplete="street-address"
+              />
+              <div class="error-text">Please enter your property address.</div>
+            </div>
+          </div>
+
+          <!-- STEP 2: Property -->
+          <div class="step" data-step="2">
+            <div class="step-eyebrow">Tell us about the property</div>
+            <h2>What are we designing for?</h2>
+            <p class="step-sub">This helps us size your system correctly.</p>
+
+            <div class="field" id="field-buildingType">
+              <label>Building type</label>
+              <div class="choice-grid" id="buildingTypeGrid">
+                <div class="choice" data-value="Residential">
+                  <span class="choice-icon">🏠</span>
+                  <span class="choice-label">Residential</span>
+                </div>
+                <div class="choice" data-value="Commercial">
+                  <span class="choice-icon">🏢</span>
+                  <span class="choice-label">Commercial</span>
+                </div>
+              </div>
+              <div class="error-text">Please choose a building type.</div>
+            </div>
+
+            <div class="field" id="field-kwh">
+              <label for="kwhRange">Average monthly usage</label>
+              <div class="kwh-row">
+                <input
+                  type="number"
+                  id="kwhInput"
+                  class="kwh-input"
+                  min="0"
+                  max="5000"
+                  value="400"
+                />
+                <input
+                  type="range"
+                  id="kwhRange"
+                  min="0"
+                  max="3000"
+                  step="10"
+                  value="400"
+                />
+                <span class="kwh-unit">kWh/mo</span>
+              </div>
+              <div class="error-text">Please enter your monthly kWh usage.</div>
+            </div>
+          </div>
+
+          <!-- STEP 3: Setup preference -->
+          <div class="step" data-step="3">
+            <div class="step-eyebrow">Your setup, your call</div>
+            <h2>How do you want to be powered?</h2>
+            <p class="step-sub">
+              Not sure? Pick your best guess — we'll confirm during the consult.
+            </p>
+
+            <div class="field" id="field-setup">
+              <label>Preferred setup</label>
+              <div class="choice-grid three">
+                <div class="choice" data-value="Off-grid">
+                  <span class="choice-icon">🔋</span>
+                  <span class="choice-label">Off-grid</span>
+                </div>
+                <div class="choice" data-value="On-grid">
+                  <span class="choice-icon">🔌</span>
+                  <span class="choice-label">On-grid</span>
+                </div>
+                <div class="choice" data-value="Hybrid">
+                  <span class="choice-icon">🔀</span>
+                  <span class="choice-label">Hybrid</span>
+                </div>
+              </div>
+              <div class="error-text">Please choose a preferred setup.</div>
+            </div>
+
+            <div class="field">
+              <label for="message"
+                >Anything else we should know?
+                <span style="color: var(--muted); font-weight: 400"
+                  >(optional)</span
+                ></label
+              >
+              <textarea
+                id="message"
+                placeholder="Roof type, timeline, budget range, etc."
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- STEP 4: Review -->
+          <div class="step" data-step="4">
+            <div class="step-eyebrow">Almost there</div>
+            <h2>Review your details</h2>
+            <p class="step-sub">
+              Make sure everything looks right before we send it in.
+            </p>
+
+            <div class="review-list" id="reviewList"></div>
+
+            <div class="submit-status" id="submitStatus"></div>
+          </div>
+
+          <!-- SUCCESS -->
+          <div class="step" data-step="success">
+            <div class="success">
+              <div class="success-mark">✓</div>
+              <h2>You're on the grid.</h2>
+              <p>
+                Thanks — your request has been sent. A SunLine specialist will
+                reach out shortly with your custom quote.
+              </p>
+            </div>
+          </div>
+
+          <div class="nav-row" id="navRow">
+            <button type="button" class="btn-ghost" id="backBtn">Back</button>
+            <button type="button" class="btn-primary" id="nextBtn">
+              Continue
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      /* ====================== CONFIGURE ME ======================
+     Fill in your Supabase project URL and anon (public) key,
+     and make sure a "leads" table exists with matching columns:
+     full_name, email, address, building_type, kwh_monthly,
+     preferred_setup, message  (all text, kwh_monthly can be int8/numeric)
+     ============================================================ */
+      const SUPABASE_URL = "https://bomajvafxbwwyfjwtapn.supabase.co"; // e.g. https://xxxxxxxx.supabase.co
+      const SUPABASE_ANON_KEY =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJvbWFqdmFmeGJ3d3lmand0YXBuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI0NjI3NjcsImV4cCI6MjA5ODAzODc2N30.1a_6EaXVY1GB6p0CO0LR6pl1M5ZG-T6OgGCfn61dJmk";
+      const TABLE_NAME = "leads";
+      /* ============================================================ */
+
+      const state = {
+        step: 1,
+        totalSteps: 4,
+        data: {
+          fullName: "",
+          email: "",
+          address: "",
+          buildingType: "",
+          kwhMonthly: 400,
+          preferredSetup: "",
+          message: "",
+        },
+      };
+
+      const ARC_CIRCUMFERENCE = 163.36;
+      const arcFill = document.getElementById("arcFill");
+      const arcSun = document.getElementById("arcSun");
+      const arcLabel = document.getElementById("arcLabel");
+      const arcTitle = document.getElementById("arcTitle");
+
+      function updateArc() {
+        const pct = Math.min(state.step / state.totalSteps, 1);
+        const offset = ARC_CIRCUMFERENCE * (1 - pct);
+        arcFill.style.strokeDashoffset = offset;
+        const angle = -90 + 360 * pct;
+        arcSun.style.transform = `rotate(${angle}deg) translate(0, -26px) rotate(${-angle}deg)`;
+        arcLabel.textContent = `CHARGE ${Math.round(pct * 100)}%`;
+        arcTitle.textContent =
+          state.step <= state.totalSteps
+            ? `Step ${state.step} of ${state.totalSteps}`
+            : "Complete";
+      }
+
+      function showStep(stepKey) {
+        document
+          .querySelectorAll(".step")
+          .forEach((el) => el.classList.remove("active"));
+        document
+          .querySelector(`.step[data-step="${stepKey}"]`)
+          .classList.add("active");
+        const navRow = document.getElementById("navRow");
+        const backBtn = document.getElementById("backBtn");
+        const nextBtn = document.getElementById("nextBtn");
+
+        if (stepKey === "success") {
+          navRow.style.display = "none";
+          return;
+        }
+        navRow.style.display = "flex";
+        backBtn.style.visibility = stepKey === 1 ? "hidden" : "visible";
+
+        if (stepKey === state.totalSteps) {
+          nextBtn.textContent = "Submit request";
+          renderReview();
+        } else {
+          nextBtn.textContent = "Continue";
+        }
+      }
+
+      function setError(fieldId, show) {
+        const el = document.getElementById(fieldId);
+        if (!el) return;
+        el.classList.toggle("invalid", show);
+      }
+
+      function validateStep(step) {
+        let valid = true;
+        if (step === 1) {
+          const fullName = document.getElementById("fullName").value.trim();
+          const email = document.getElementById("email").value.trim();
+          const address = document.getElementById("address").value.trim();
+          const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+          setError("field-fullName", !fullName);
+          if (!fullName) valid = false;
+          setError("field-email", !emailOk);
+          if (!emailOk) valid = false;
+          setError("field-address", !address);
+          if (!address) valid = false;
+
+          state.data.fullName = fullName;
+          state.data.email = email;
+          state.data.address = address;
+        }
+        if (step === 2) {
+          const kwh = parseInt(document.getElementById("kwhInput").value, 10);
+          const buildingOk = !!state.data.buildingType;
+          const kwhOk = !isNaN(kwh) && kwh > 0;
+
+          setError("field-buildingType", !buildingOk);
+          if (!buildingOk) valid = false;
+          setError("field-kwh", !kwhOk);
+          if (!kwhOk) valid = false;
+
+          state.data.kwhMonthly = kwhOk ? kwh : 0;
+        }
+        if (step === 3) {
+          const setupOk = !!state.data.preferredSetup;
+          setError("field-setup", !setupOk);
+          if (!setupOk) valid = false;
+          state.data.message = document.getElementById("message").value.trim();
+        }
+        return valid;
+      }
+
+      function renderReview() {
+        const d = state.data;
+        const rows = [
+          ["Name", d.fullName],
+          ["Email", d.email],
+          ["Address", d.address],
+          ["Building type", d.buildingType],
+          ["Monthly usage", `${d.kwhMonthly} kWh`],
+          ["Preferred setup", d.preferredSetup],
+          ["Message", d.message || "—"],
+        ];
+        document.getElementById("reviewList").innerHTML = rows
+          .map(
+            ([k, v]) => `
+      <div class="review-row">
+        <span class="review-key">${k}</span>
+        <span class="review-val">${escapeHtml(String(v))}</span>
+      </div>
+    `
+          )
+          .join("");
+      }
+
+      function escapeHtml(str) {
+        const d = document.createElement("div");
+        d.textContent = str;
+        return d.innerHTML;
+      }
+
+      // choice selection (building type)
+      document
+        .getElementById("buildingTypeGrid")
+        .addEventListener("click", (e) => {
+          const choice = e.target.closest(".choice");
+          if (!choice) return;
+          document
+            .querySelectorAll("#buildingTypeGrid .choice")
+            .forEach((c) => c.classList.remove("selected"));
+          choice.classList.add("selected");
+          state.data.buildingType = choice.dataset.value;
+          setError("field-buildingType", false);
+        });
+
+      // choice selection (preferred setup)
+      document
+        .querySelector('.step[data-step="3"] .choice-grid')
+        .addEventListener("click", (e) => {
+          const choice = e.target.closest(".choice");
+          if (!choice) return;
+          document
+            .querySelectorAll('.step[data-step="3"] .choice')
+            .forEach((c) => c.classList.remove("selected"));
+          choice.classList.add("selected");
+          state.data.preferredSetup = choice.dataset.value;
+          setError("field-setup", false);
+        });
+
+      // kwh slider <-> number sync
+      const kwhInput = document.getElementById("kwhInput");
+      const kwhRange = document.getElementById("kwhRange");
+      kwhRange.addEventListener("input", () => {
+        kwhInput.value = kwhRange.value;
+        setError("field-kwh", false);
+      });
+      kwhInput.addEventListener("input", () => {
+        const v = parseInt(kwhInput.value || "0", 10);
+        if (v <= 3000) kwhRange.value = v;
+        setError("field-kwh", false);
+      });
+
+      // live-clear errors on typing
+      ["fullName", "email", "address"].forEach((id) => {
+        document
+          .getElementById(id)
+          .addEventListener("input", () =>
+            setError(`field-${id === "fullName" ? "fullName" : id}`, false)
+          );
+      });
+
+      async function submitLead() {
+        const nextBtn = document.getElementById("nextBtn");
+        const statusEl = document.getElementById("submitStatus");
+        statusEl.style.display = "none";
+
+        if (
+          SUPABASE_URL.includes("YOUR_SUPABASE_URL") ||
+          SUPABASE_ANON_KEY.includes("YOUR_SUPABASE_ANON_KEY")
+        ) {
+          statusEl.textContent =
+            "Supabase isn't configured yet — add SUPABASE_URL and SUPABASE_ANON_KEY in the script.";
+          statusEl.style.display = "block";
+          return false;
+        }
+
+        nextBtn.disabled = true;
+        nextBtn.textContent = "Sending…";
+
+        const payload = {
+          full_name: state.data.fullName,
+          email: state.data.email,
+          address: state.data.address,
+          building_type: state.data.buildingType,
+          kwh_monthly: state.data.kwhMonthly,
+          preferred_setup: state.data.preferredSetup,
+          message: state.data.message,
+        };
+
+        try {
+          const res = await fetch(`${SUPABASE_URL}/rest/v1/${TABLE_NAME}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              apikey: SUPABASE_ANON_KEY,
+              Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+              Prefer: "return=minimum",
+            },
+            body: JSON.stringify(payload),
+          });
+
+          if (!res.ok) {
+            const errText = await res.text();
+            throw new Error(errText || `Request failed (${res.status})`);
+          }
+          return true;
+        } catch (err) {
+          statusEl.textContent = `Couldn't submit: ${err.message}`;
+          statusEl.style.display = "block";
+          nextBtn.disabled = false;
+          nextBtn.textContent = "Submit request";
+          return false;
+        }
+      }
+
+      document.getElementById("nextBtn").addEventListener("click", async () => {
+        if (!validateStep(state.step)) return;
+
+        if (state.step === state.totalSteps) {
+          const ok = await submitLead();
+          if (!ok) return;
+          showStep("success");
+          updateArc();
+          return;
+        }
+
+        state.step += 1;
+        showStep(state.step);
+        updateArc();
+      });
+
+      document.getElementById("backBtn").addEventListener("click", () => {
+        if (state.step === 1) return;
+        state.step -= 1;
+        showStep(state.step);
+        updateArc();
+      });
+
+      updateArc();
+    </script>
+  </body>
+</html>

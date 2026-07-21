@@ -5,6 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1" />
 <title>Suncore Technologies — Solar Energy Solutions</title>
 
+<!-- Set theme before first paint, to avoid a flash of the wrong theme -->
+<script>
+  (function(){
+    try{
+      var saved = localStorage.getItem('suncore-theme');
+      var theme = saved || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', theme);
+    }catch(e){
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  })();
+</script>
+
 <!-- PWA -->
 <link rel="manifest" href="manifest.json" />
 <meta name="theme-color" content="#0E1729" />
@@ -18,7 +31,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback&render=explicit" async defer></script>
 <style>
   :root{
     --ink:#0E1729;
@@ -33,6 +46,38 @@
     --muted:#8FA0C0;
     --danger:#FF6B6B;
     --nav-h: 64px;
+    --nav-bg: rgba(14,23,41,0.85);
+    --surface-1: rgba(255,255,255,0.03);
+    --surface-2: rgba(255,255,255,0.02);
+    --surface-3: rgba(255,255,255,0.015);
+    --shadow-card: 0 30px 80px -20px rgba(0,0,0,0.6);
+    --shadow-hero: 0 30px 80px -20px rgba(0,0,0,0.5);
+    --theme-transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  html[data-theme="light"]{
+    --ink:#F7F5F0;
+    --panel:#FFFFFF;
+    --panel-2:#F1EEE7;
+    --line: rgba(16,26,46,0.10);
+    --sun:#FFB238;
+    --sun-2:#B45309;
+    --dawn:#E2572E;
+    --sky:#0D9488;
+    --mist:#101A2E;
+    --muted:#55637F;
+    --danger:#D14343;
+    --nav-bg: rgba(247,245,240,0.85);
+    --surface-1: rgba(16,26,46,0.035);
+    --surface-2: rgba(16,26,46,0.025);
+    --surface-3: rgba(16,26,46,0.02);
+    --shadow-card: 0 24px 60px -20px rgba(16,26,46,0.16);
+    --shadow-hero: 0 24px 60px -20px rgba(16,26,46,0.18);
+  }
+  @media (prefers-reduced-motion: reduce){
+    :root{ --theme-transition: none; }
+  }
+  body, .site-nav, .card, .service-card, .stat, .faq-item, .flow-diagram, input, textarea, .choice, .btn-ghost, .review-row, .site-footer{
+    transition: var(--theme-transition);
   }
   *{box-sizing:border-box;}
   html{ scroll-behavior:smooth; }
@@ -65,7 +110,7 @@
     height:var(--nav-h);
     display:flex;
     align-items:center;
-    background:rgba(14,23,41,0.85);
+    background:var(--nav-bg);
     backdrop-filter:blur(10px);
     -webkit-backdrop-filter:blur(10px);
     border-bottom:1px solid var(--line);
@@ -109,6 +154,30 @@
   .nav-links a{ text-decoration:none; transition:color 0.15s; }
   .nav-links a:hover{ color:var(--mist); }
   .nav-cta{ display:none; }
+  .theme-toggle{
+    display:none;
+    align-items:center;
+    justify-content:center;
+    min-height:38px;
+    padding:0 14px;
+    background:transparent;
+    border:1px solid var(--line);
+    border-radius:8px;
+    color:var(--muted);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    font-weight:600;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    cursor:pointer;
+  }
+  .theme-toggle:hover{ color:var(--mist); border-color:rgba(232,236,244,0.24); }
+  .theme-toggle-mobile{
+    display:flex;
+    width:100%;
+    justify-content:center;
+    margin-top:4px;
+  }
   .nav-toggle{
     display:flex;
     align-items:center;
@@ -147,6 +216,7 @@
   @media (min-width:840px){
     .nav-links{ display:flex; }
     .nav-cta{ display:inline-flex; }
+    .theme-toggle{ display:flex; }
     .nav-toggle{ display:none; }
     .mobile-menu{ display:none !important; }
   }
@@ -207,7 +277,7 @@
     aspect-ratio:16/10;
     border-radius:20px;
     overflow:hidden;
-    box-shadow: 0 30px 80px -20px rgba(0,0,0,0.5);
+    box-shadow: var(--shadow-hero);
   }
   @media (min-width:900px){
     .hero-inner{ flex-direction:row; align-items:center; gap:48px; }
@@ -310,7 +380,7 @@
     gap:12px;
   }
   .stat{
-    background:rgba(255,255,255,0.03);
+    background:var(--surface-1);
     border:1px solid var(--line);
     border-radius:14px;
     padding:18px 14px;
@@ -341,7 +411,7 @@
     .testimonial-grid{ grid-template-columns:repeat(3, 1fr); }
   }
   .testimonial-card{
-    background:rgba(255,255,255,0.03);
+    background:var(--surface-1);
     border:1px solid var(--line);
     border-radius:16px;
     padding:22px;
@@ -373,7 +443,7 @@
   /* ============ FAQ ============ */
   .faq-list{ display:flex; flex-direction:column; gap:10px; }
   .faq-item{
-    background:rgba(255,255,255,0.03);
+    background:var(--surface-1);
     border:1px solid var(--line);
     border-radius:12px;
     overflow:hidden;
@@ -427,7 +497,7 @@
     border:1px solid var(--line);
     border-radius:20px;
     padding:28px 20px 24px;
-    box-shadow: 0 30px 80px -20px rgba(0,0,0,0.6);
+    box-shadow: var(--shadow-card);
     position:relative;
     overflow:hidden;
   }
@@ -469,7 +539,7 @@
   label{ display:block; font-size:13px; font-weight:500; color:var(--muted); margin-bottom:7px; }
   input[type=text], input[type=email], input[type=number], textarea{
     width:100%;
-    background:rgba(255,255,255,0.03);
+    background:var(--surface-1);
     border:1px solid var(--line);
     border-radius:10px;
     padding:13px 14px;
@@ -496,7 +566,7 @@
   .choice-grid.three{ grid-template-columns:1fr 1fr 1fr; }
   .choice{
     border:1px solid var(--line);
-    background:rgba(255,255,255,0.02);
+    background:var(--surface-2);
     border-radius:12px;
     padding:16px 10px;
     min-height:44px;
@@ -525,7 +595,7 @@
   .review-row{
     display:flex; justify-content:space-between; gap:16px;
     padding:11px 14px;
-    background:rgba(255,255,255,0.03);
+    background:var(--surface-1);
     border:1px solid var(--line);
     border-radius:10px;
     font-size:13.5px;
@@ -552,7 +622,7 @@
   .site-footer{
     border-top:1px solid var(--line);
     padding:48px 0 28px;
-    background:rgba(255,255,255,0.015);
+    background:var(--surface-3);
   }
   .footer-grid{
     display:grid;
@@ -613,6 +683,7 @@
       <a href="#faq">FAQ</a>
     </div>
     <a href="#get-quote" class="btn btn-primary nav-cta">Get a Quote</a>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch to light theme">Light</button>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
@@ -622,6 +693,7 @@
   <a href="#services">Services</a>
   <a href="#about">About</a>
   <a href="#faq">FAQ</a>
+  <button class="theme-toggle theme-toggle-mobile" id="themeToggleMobile" type="button" aria-pressed="false" aria-label="Switch to light theme">Light</button>
   <a href="#get-quote" class="btn btn-primary" style="margin-top:8px;">Get a Quote</a>
 </div>
 
@@ -948,12 +1020,7 @@
 
           <div class="review-list" id="reviewList"></div>
 
-          <div class="cf-turnstile"
-               data-sitekey="0x4AAAAAAD5IPZ3R5ECmhEup"
-               data-theme="dark"
-               data-callback="onTurnstileSuccess"
-               data-expired-callback="onTurnstileExpired"
-               style="margin: 6px 0 4px;"></div>
+          <div id="turnstileContainer" style="margin: 6px 0 4px;"></div>
 
           <div class="submit-status" id="submitStatus"></div>
         </div>
@@ -1021,6 +1088,40 @@
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
+  /* ============ THEME TOGGLE ============ */
+  const themeToggle = document.getElementById('themeToggle');
+  const themeToggleMobile = document.getElementById('themeToggleMobile');
+
+  function getTheme(){
+    return document.documentElement.getAttribute('data-theme') || 'dark';
+  }
+
+  function updateThemeButtons(){
+    const theme = getTheme();
+    const targetLabel = theme === 'dark' ? 'Light' : 'Dark';
+    [themeToggle, themeToggleMobile].forEach(btn => {
+      if (!btn) return;
+      btn.textContent = targetLabel;
+      btn.setAttribute('aria-pressed', String(theme === 'light'));
+      btn.setAttribute('aria-label', `Switch to ${targetLabel.toLowerCase()} theme`);
+    });
+  }
+
+  function setTheme(theme){
+    document.documentElement.setAttribute('data-theme', theme);
+    try{ localStorage.setItem('suncore-theme', theme); }catch(e){}
+    updateThemeButtons();
+    renderTurnstile(); // re-render widget so it matches the new theme
+  }
+
+  function toggleTheme(){
+    setTheme(getTheme() === 'dark' ? 'light' : 'dark');
+  }
+
+  if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+  if (themeToggleMobile) themeToggleMobile.addEventListener('click', toggleTheme);
+  updateThemeButtons();
+
   const navToggle = document.getElementById('navToggle');
   const mobileMenu = document.getElementById('mobileMenu');
   navToggle.addEventListener('click', () => {
@@ -1059,10 +1160,28 @@
   const EDGE_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/submit-lead`;
   const SUPABASE_ANON_KEY =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJvbWFqdmFmeGJ3d3lmand0YXBuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI0NjI3NjcsImV4cCI6MjA5ODAzODc2N30.1a_6EaXVY1GB6p0CO0LR6pl1M5ZG-T6OgGCfn61dJmk";
+  const TURNSTILE_SITE_KEY = "0x4AAAAAAD5IPZ3R5ECmhEup";
 
   let turnstileToken = null;
-  window.onTurnstileSuccess = (token) => { turnstileToken = token; };
-  window.onTurnstileExpired = () => { turnstileToken = null; };
+  let turnstileWidgetId = null;
+
+  function renderTurnstile(){
+    const container = document.getElementById('turnstileContainer');
+    if (!container || !window.turnstile) return; // widget script not loaded yet, or funnel not on page
+
+    if (turnstileWidgetId !== null){
+      try{ window.turnstile.remove(turnstileWidgetId); }catch(e){}
+    }
+    turnstileToken = null;
+    turnstileWidgetId = window.turnstile.render(container, {
+      sitekey: TURNSTILE_SITE_KEY,
+      theme: getTheme(),
+      callback: (token) => { turnstileToken = token; },
+      'expired-callback': () => { turnstileToken = null; }
+    });
+  }
+  // Called by the Turnstile script itself once it's finished loading (see script tag's ?onload= param)
+  window.onloadTurnstileCallback = renderTurnstile;
 
   const state = {
     step: 1,
@@ -1261,7 +1380,7 @@
       statusEl.style.display = 'block';
       nextBtn.disabled = false;
       nextBtn.textContent = 'Submit request';
-      if (window.turnstile) window.turnstile.reset();
+      if (window.turnstile && turnstileWidgetId !== null) window.turnstile.reset(turnstileWidgetId);
       turnstileToken = null;
       return false;
     }

@@ -2277,13 +2277,62 @@
         opacity: 0.5;
         cursor: not-allowed;
       }
+
+      .suncore-faq-lead-card {
+        align-self: flex-start;
+        max-width: 90%;
+        background: white;
+        border: 1px solid #f59e0b;
+        border-radius: 10px;
+        padding: 12px;
+        font-size: 13px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .suncore-faq-lead-card p {
+        margin: 0;
+        color: #111827;
+        font-weight: 600;
+      }
+      .suncore-faq-lead-actions {
+        display: flex;
+        gap: 6px;
+        margin-top: 2px;
+      }
+      .suncore-faq-lead-submit {
+        background: #059669;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 6px 12px;
+        font-size: 13px;
+        cursor: pointer;
+        font-weight: 600;
+        flex: 1;
+      }
+      .suncore-faq-lead-dismiss {
+        background: none;
+        border: 1px solid #d1d5db;
+        color: #6b7280;
+        border-radius: 6px;
+        padding: 6px 12px;
+        font-size: 13px;
+        cursor: pointer;
+      }
+      .suncore-faq-lead-note {
+        color: #6b7280;
+        font-size: 11px;
+        margin: 0;
+        font-weight: 400;
+      }
     </style>
 
     <button id="suncore-faq-bubble" aria-label="Open FAQ chat">💬</button>
 
     <div id="suncore-faq-panel">
       <div id="suncore-faq-header">
-        <span>Solar Buddy, at your service🙂</span>
+        <span>Suncore FAQ</span>
         <button id="suncore-faq-close" aria-label="Close chat">✕</button>
       </div>
       <div id="suncore-faq-messages">
@@ -2352,6 +2401,10 @@
           "suncore-faq-suggestions"
         );
 
+        // Session-level conversation memory (resets on page reload, by design)
+        const conversationHistory = [];
+        const MAX_HISTORY_TURNS = 6; // last 3 exchanges (user + bot pairs)
+
         bubble.addEventListener("click", () => {
           panel.classList.toggle("open");
           if (panel.classList.contains("open")) inputEl.focus();
@@ -2367,6 +2420,42 @@
           messagesEl.appendChild(div);
           messagesEl.scrollTop = messagesEl.scrollHeight;
           return div;
+        }
+
+        function showLeadCard() {
+          // Avoid stacking multiple cards if visitor triggers intent more than once
+          const existing = messagesEl.querySelector(".suncore-faq-lead-card");
+          if (existing) existing.remove();
+
+          const card = document.createElement("div");
+          card.className = "suncore-faq-lead-card";
+          card.innerHTML = `
+        <p>Want a personalized quote?</p>
+        <div class="suncore-faq-lead-actions">
+          <button class="suncore-faq-lead-submit">Get my quote</button>
+          <button class="suncore-faq-lead-dismiss">No thanks</button>
+        </div>
+        <p class="suncore-faq-lead-note">Takes about a minute - covers your usage and setup so we can give you a real estimate.</p>
+      `;
+
+          const submitBtn = card.querySelector(".suncore-faq-lead-submit");
+          const dismissBtn = card.querySelector(".suncore-faq-lead-dismiss");
+
+          submitBtn.addEventListener("click", () => {
+            panel.classList.remove("open");
+            const funnelSection = document.getElementById("get-quote");
+            if (funnelSection) {
+              funnelSection.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+            }
+          });
+
+          dismissBtn.addEventListener("click", () => card.remove());
+
+          messagesEl.appendChild(card);
+          messagesEl.scrollTop = messagesEl.scrollHeight;
         }
 
         async function sendQuestion(presetQuestion, chipEl) {
@@ -2388,7 +2477,7 @@
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
               },
-              body: JSON.stringify({ question }),
+              body: JSON.stringify({ question, history: conversationHistory }),
             });
 
             if (!res.ok) throw new Error(`Request failed: ${res.status}`);
@@ -2396,6 +2485,17 @@
             const data = await res.json();
             loadingMsg.remove();
             addMessage(data.answer, "bot");
+
+            // Update session memory, keeping only the most recent turns
+            conversationHistory.push({ role: "user", text: question });
+            conversationHistory.push({ role: "bot", text: data.answer });
+            while (conversationHistory.length > MAX_HISTORY_TURNS) {
+              conversationHistory.shift();
+            }
+
+            if (data.lead_intent) {
+              showLeadCard();
+            }
           } catch (err) {
             loadingMsg.remove();
             addMessage(

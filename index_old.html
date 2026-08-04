@@ -321,7 +321,17 @@
 
       /* ============ SECTION SCAFFOLDING ============ */
       section {
-        padding: 64px 0;
+        padding: 40px 0;
+      }
+      @media (min-width: 640px) {
+        section {
+          padding: 52px 0;
+        }
+      }
+      @media (min-width: 900px) {
+        section {
+          padding: 64px 0;
+        }
       }
       .section-eyebrow {
         font-family: "IBM Plex Mono", monospace;
@@ -367,7 +377,7 @@
 
       /* ============ HERO ============ */
       .hero {
-        padding: 56px 0 48px;
+        padding: 24px 0 16px;
       }
       .hero-inner {
         display: flex;
@@ -543,6 +553,27 @@
         line-height: 1.6;
         margin: 0;
       }
+      #capabilities-nav-targets .service-card {
+        padding: 12px;
+      }
+      #capabilities-nav-targets .service-icon {
+        width: 26px;
+        height: 26px;
+        font-size: 13px;
+        margin-bottom: 8px;
+        border-radius: 8px;
+      }
+      #capabilities-nav-targets .service-card h3 {
+        font-size: 14px;
+        margin-bottom: 4px;
+      }
+      #capabilities-nav-targets .service-card p {
+        font-size: 12px;
+        line-height: 1.4;
+      }
+      #capabilities-nav-targets .services-grid {
+        gap: 10px;
+      }
 
       /* ============ ABOUT ============ */
       .about-grid {
@@ -616,6 +647,149 @@
         .stats-row {
           flex: 1;
         }
+      }
+      .about-pillars {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin-top: 32px;
+      }
+      @media (min-width: 720px) {
+        .about-pillars {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      .about-pillar {
+        background: linear-gradient(180deg, var(--panel), var(--panel-2));
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 22px 24px;
+      }
+      .about-pillar h3 {
+        font-size: 16px;
+        margin-bottom: 8px;
+        color: var(--sun-2);
+      }
+      .about-pillar p {
+        color: var(--muted);
+        font-size: 14.5px;
+        line-height: 1.6;
+        margin: 0;
+      }
+      .shine-block {
+        margin-top: 40px;
+      }
+      .shine-heading {
+        font-size: 18px;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+      .shine-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+      }
+      @media (min-width: 720px) {
+        .shine-grid {
+          grid-template-columns: repeat(5, 1fr);
+        }
+      }
+      .shine-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 8px;
+        padding: 16px 10px;
+        background: var(--surface-1);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+      }
+      .shine-letter {
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 700;
+        font-size: 22px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 178, 56, 0.14);
+        color: var(--sun-2);
+      }
+      .shine-word {
+        font-size: 12.5px;
+        color: var(--muted);
+        line-height: 1.3;
+      }
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      @media (min-width: 640px) {
+        .contact-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (min-width: 1000px) {
+        .contact-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      .contact-card {
+        background: linear-gradient(180deg, var(--panel), var(--panel-2));
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 22px;
+      }
+      .contact-icon {
+        font-size: 22px;
+        margin-bottom: 10px;
+      }
+      .contact-card h3 {
+        font-size: 15.5px;
+        margin-bottom: 8px;
+      }
+      .contact-card p {
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.5;
+        margin: 0 0 2px;
+      }
+      .contact-card a {
+        color: var(--muted);
+        text-decoration: none;
+      }
+      .contact-card a:hover {
+        color: var(--sun-2);
+      }
+      .two-col-lists {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 32px;
+        margin-top: 36px;
+      }
+      @media (min-width: 720px) {
+        .two-col-lists {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      .list-heading {
+        font-size: 16px;
+        margin-bottom: 14px;
+      }
+      .section-cta {
+        margin-top: 40px;
+        padding-top: 32px;
+        border-top: 1px solid var(--line);
+        text-align: center;
+      }
+      .section-cta p {
+        color: var(--muted);
+        font-size: 15px;
+        margin: 0 0 16px;
       }
 
       /* ============ TESTIMONIALS ============ */
@@ -1123,34 +1297,27 @@
       /* ============ FOOTER ============ */
       .site-footer {
         border-top: 1px solid var(--line);
-        padding: 48px 0 28px;
+        padding: 14px 0 8px;
         background: var(--surface-3);
       }
       .footer-grid {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 32px;
-        margin-bottom: 36px;
+        gap: 12px;
+        margin-bottom: 10px;
       }
-      @media (min-width: 720px) {
+      @media (min-width: 640px) {
         .footer-grid {
-          grid-template-columns: 1.4fr 1fr 1fr;
+          grid-template-columns: 1fr 1fr 1fr;
         }
-      }
-      .footer-brand p {
-        color: var(--muted);
-        font-size: 13.5px;
-        line-height: 1.6;
-        margin: 12px 0 0;
-        max-width: 320px;
       }
       .footer-col h4 {
         font-family: "IBM Plex Mono", monospace;
-        font-size: 11px;
+        font-size: 10px;
         text-transform: uppercase;
         letter-spacing: 0.1em;
         color: var(--muted);
-        margin: 0 0 14px;
+        margin: 0 0 6px;
       }
       .footer-col ul {
         list-style: none;
@@ -1158,23 +1325,51 @@
         padding: 0;
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 4px;
+      }
+      .footer-links-row {
+        flex-direction: row !important;
+        flex-wrap: wrap;
+        gap: 4px 12px !important;
+      }
+      .footer-connect-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        gap: 4px 10px !important;
       }
       .footer-col a {
         text-decoration: none;
         color: var(--mist);
-        font-size: 13.5px;
+        font-size: 12.5px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        white-space: nowrap;
       }
       .footer-col a:hover {
         color: var(--sun-2);
       }
+      .footer-col li {
+        display: flex;
+        align-items: flex-start;
+        gap: 6px;
+        font-size: 12.5px;
+        color: var(--mist);
+        line-height: 1.3;
+      }
+      .footer-icon {
+        width: 12px;
+        height: 12px;
+        flex: none;
+        margin-top: 1px;
+      }
       .footer-bottom {
         display: flex;
         flex-direction: column;
-        gap: 12px;
-        padding-top: 24px;
+        gap: 6px;
+        padding-top: 8px;
         border-top: 1px solid var(--line);
-        font-size: 12.5px;
+        font-size: 11.5px;
         color: var(--muted);
       }
       @media (min-width: 600px) {
@@ -1229,7 +1424,7 @@
           <a href="#ai-automation">AI Automation</a>
           <a href="#faq">FAQ</a>
           <a href="#about">About Us</a>
-          <a href="#get-quote">Contact</a>
+          <a href="#contact">Contact</a>
         </div>
         <a href="#get-quote" class="btn btn-primary nav-cta">Get a Quote</a>
         <button
@@ -1267,7 +1462,7 @@
       <a href="#ai-automation">AI Automation</a>
       <a href="#faq">FAQ</a>
       <a href="#about">About Us</a>
-      <a href="#get-quote">Contact</a>
+      <a href="#contact">Contact</a>
       <button
         class="theme-toggle theme-toggle-mobile"
         id="themeToggleMobile"
@@ -1289,11 +1484,11 @@
       <div class="container hero-inner">
         <div class="hero-copy">
           <div class="section-eyebrow">SunByte IT and Solar Solutions</div>
-          <h1>Clean Energy. Real Savings. Lasting Value.</h1>
+          <h1>Smarter Technology. Sustainable Energy.</h1>
           <p class="hero-sub">
-            SunByte designs and installs off-grid, on-grid, and hybrid solar
-            systems for homes and businesses — sized to your actual usage, not a
-            one-size-fits-all package.
+            SunByte delivers intelligent software, AI-driven automation, and
+            customized solar solutions that help businesses and communities
+            work smarter, reduce costs, and build a more sustainable future.
           </p>
           <div class="hero-ctas">
             <a href="#get-quote" class="btn btn-primary">Get your free quote</a>
@@ -1319,7 +1514,7 @@
 
     <!-- ============ SERVICES ============ -->
     <!-- ============ CAPABILITIES ============ -->
-    <section id="capabilities-nav-targets" style="padding-bottom: 0">
+    <section id="capabilities-nav-targets" style="padding-bottom: 0; padding-top: 20px">
       <div class="container">
         <div class="services-grid">
           <div class="service-card" id="solar">
@@ -1330,7 +1525,7 @@
               sustainable future.
             </p>
           </div>
-          <div class="service-card" id="software">
+          <div class="service-card">
             <div class="service-icon icon-teal">💻</div>
             <h3>Software Development</h3>
             <p>
@@ -1338,7 +1533,7 @@
               streamline operations and drive growth.
             </p>
           </div>
-          <div class="service-card" id="ai-automation">
+          <div class="service-card">
             <div class="service-icon icon-green">🤖</div>
             <h3>AI &amp; Automation</h3>
             <p>
@@ -1396,41 +1591,68 @@
 
     <!-- ============ ABOUT ============ -->
     <section id="about">
-      <div class="container about-grid">
-        <div class="about-copy">
-          <div class="section-eyebrow">Why SunByte</div>
-          <h2 style="font-size: 26px; margin-bottom: 14px">
-            We don't just install panels. We build energy independence.
-          </h2>
-          <p>
-            We believe solar should be simple, reliable, and built to save you
-            money for years to come. That's why every SunByte system is
-            carefully designed to:
-          </p>
-          <ul class="about-list">
-            <li>Reduce your electricity bills</li>
-            <li>Maximize your return on investment</li>
-            <li>Use trusted, high-quality components</li>
-            <li>Deliver reliable performance for years</li>
-            <li>Grow with your future energy needs</li>
-          </ul>
-          <p>
-            Our goal isn't just to install solar panels — it's to help you
-            achieve long-term energy independence.
-          </p>
+      <div class="container">
+        <div class="section-head">
+          <div class="section-eyebrow">About Us</div>
+          <h2>Empowering Businesses Through Technology and Sustainable Energy</h2>
         </div>
-        <div class="stats-row" style="display: none">
-          <div class="stat">
-            <span class="stat-num">[XX]+</span>
-            <span class="stat-label">Installations</span>
+        <div class="about-grid">
+          <div class="about-copy">
+            <p>
+              At SunByte, we help businesses and communities embrace digital
+              transformation and clean energy through intelligent software,
+              AI-driven automation, and customized solar solutions.
+            </p>
+            <p>
+              We are committed to delivering innovative, reliable, and
+              sustainable solutions that help our customers work smarter,
+              reduce costs, and build a better future.
+            </p>
           </div>
-          <div class="stat">
-            <span class="stat-num">[XX]</span>
-            <span class="stat-label">Years experience</span>
+        </div>
+
+        <div class="about-pillars">
+          <div class="about-pillar">
+            <h3>Our Vision</h3>
+            <p>
+              To empower businesses and communities through intelligent
+              software, AI-driven automation, and sustainable solar
+              solutions.
+            </p>
           </div>
-          <div class="stat">
-            <span class="stat-num">[XX]%</span>
-            <span class="stat-label">Satisfaction</span>
+          <div class="about-pillar">
+            <h3>Our Mission</h3>
+            <p>
+              We create innovative software, AI-driven automation, and
+              sustainable solar solutions that help businesses work smarter,
+              grow faster, and build a more sustainable future.
+            </p>
+          </div>
+        </div>
+
+        <div class="shine-block">
+          <h3 class="shine-heading">Our Core Values</h3>
+          <div class="shine-grid">
+            <div class="shine-item">
+              <span class="shine-letter">S</span>
+              <span class="shine-word">Service Excellence</span>
+            </div>
+            <div class="shine-item">
+              <span class="shine-letter">H</span>
+              <span class="shine-word">Honesty</span>
+            </div>
+            <div class="shine-item">
+              <span class="shine-letter">I</span>
+              <span class="shine-word">Innovation</span>
+            </div>
+            <div class="shine-item">
+              <span class="shine-letter">N</span>
+              <span class="shine-word">Nurturing Partnerships</span>
+            </div>
+            <div class="shine-item">
+              <span class="shine-letter">E</span>
+              <span class="shine-word">Excellence</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1483,6 +1705,132 @@
     </section>
 
     <!-- ============ FAQ ============ -->
+    <!-- ============ SOFTWARE DEVELOPMENT ============ -->
+    <section id="software">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-eyebrow">Software Development</div>
+          <h2>Build Smarter. Grow Faster.</h2>
+        </div>
+        <div class="about-grid">
+          <div class="about-copy">
+            <p>
+              At SunByte, we develop custom software solutions that help
+              businesses streamline operations, improve productivity, and
+              accelerate growth. Whether you need a business management
+              system, web application, mobile app, or cloud-based platform,
+              we build reliable, scalable, and user-friendly solutions
+              tailored to your unique requirements.
+            </p>
+            <p>
+              Our development approach focuses on understanding your
+              business processes and delivering software that solves
+              real-world challenges — not generic, one-size-fits-all
+              applications.
+            </p>
+          </div>
+        </div>
+
+        <div class="two-col-lists">
+          <div>
+            <h3 class="list-heading">Our Software Services</h3>
+            <ul class="about-list">
+              <li>Custom Software Development</li>
+              <li>Web Application Development</li>
+              <li>Mobile Application Development</li>
+              <li>Software as a Service (SaaS)</li>
+              <li>Database Design &amp; Development</li>
+              <li>API Development &amp; System Integration</li>
+              <li>Cloud-Based Solutions</li>
+              <li>Business Management Systems</li>
+              <li>Software Maintenance &amp; Support</li>
+              <li>IT Consulting</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="list-heading">Why Choose SunByte?</h3>
+            <ul class="about-list">
+              <li>Tailored solutions designed around your business needs</li>
+              <li>Scalable and secure applications built with modern technologies</li>
+              <li>User-friendly interfaces that enhance productivity</li>
+              <li>Reliable support and continuous improvement</li>
+              <li>Long-term technology partner committed to your success</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="section-cta">
+          <p>
+            Let's build software that works for your business — today and
+            into the future.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ AI & AUTOMATION ============ -->
+    <section id="ai-automation">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-eyebrow">AI &amp; Automation</div>
+          <h2>Work Smarter with Intelligent Automation</h2>
+        </div>
+        <div class="about-grid">
+          <div class="about-copy">
+            <p>
+              At SunByte, we help businesses transform the way they work
+              through AI-driven automation. By leveraging artificial
+              intelligence and intelligent workflows, we streamline
+              repetitive tasks, improve decision-making, and increase
+              operational efficiency — allowing your team to focus on what
+              matters most.
+            </p>
+            <p>
+              Whether you're looking to automate customer interactions,
+              optimize business processes, or integrate AI into your
+              existing systems, we deliver practical solutions tailored to
+              your business goals.
+            </p>
+          </div>
+        </div>
+
+        <div class="two-col-lists">
+          <div>
+            <h3 class="list-heading">Our AI &amp; Automation Services</h3>
+            <ul class="about-list">
+              <li>AI-Powered Business Automation</li>
+              <li>AI Chatbots &amp; Virtual Assistants</li>
+              <li>AI Agents</li>
+              <li>Workflow Automation</li>
+              <li>Business Process Automation</li>
+              <li>Intelligent Document Processing</li>
+              <li>CRM &amp; Sales Automation</li>
+              <li>Custom AI Solutions</li>
+              <li>AI Consulting &amp; Strategy</li>
+              <li>AI as a Service (AIaaS)</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="list-heading">Why Choose SunByte?</h3>
+            <ul class="about-list">
+              <li>Customized AI solutions tailored to your business</li>
+              <li>Intelligent automation that saves time and reduces costs</li>
+              <li>Seamless integration with your existing systems</li>
+              <li>Scalable solutions that grow with your business</li>
+              <li>Reliable support and continuous optimization</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="section-cta">
+          <p>
+            Unlock the power of AI and transform your business with smarter,
+            more efficient automation.
+          </p>
+        </div>
+      </div>
+    </section>
+
     <section id="faq">
       <div class="container">
         <div class="section-head">
@@ -1618,6 +1966,48 @@
     </section>
 
     <!-- ============ GET A QUOTE (funnel) ============ -->
+    <!-- ============ CONTACT ============ -->
+    <section id="contact">
+      <div class="container">
+        <div class="section-head">
+          <div class="section-eyebrow">Get in Touch</div>
+          <h2>Contact Information</h2>
+        </div>
+        <div class="contact-grid">
+          <div class="contact-card">
+            <div class="contact-icon">📍</div>
+            <h3>Office Addresses</h3>
+            <p>288 Valentin Street, Buenavista, Santiago City</p>
+            <p>Sitio Wawa, Brgy. Tagpos, Binangonan, Rizal</p>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon">🌍</div>
+            <h3>IT &amp; AI Services</h3>
+            <p>Serving clients worldwide through remote collaboration.</p>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon">📧</div>
+            <h3>Email</h3>
+            <p><a href="mailto:info@sunbyte-solutions.com">info@sunbyte-solutions.com</a></p>
+            <p><a href="mailto:sales@sunbyte-solutions.com">sales@sunbyte-solutions.com</a></p>
+            <p><a href="mailto:support@sunbyte-solutions.com">support@sunbyte-solutions.com</a></p>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon">📞</div>
+            <h3>Phone</h3>
+            <p><a href="tel:+639671496191">+63 967 149 6191</a></p>
+            <p><a href="tel:+639286563785">+63 928 656 3785</a></p>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon">🕒</div>
+            <h3>Business Hours</h3>
+            <p>Monday – Saturday</p>
+            <p>8:00 AM – 5:00 PM (PHT)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="get-quote" class="funnel-section">
       <div class="container">
         <div class="card">
@@ -1900,43 +2290,57 @@
     <footer class="site-footer">
       <div class="container">
         <div class="footer-grid">
-          <div class="footer-brand">
-            <div class="brand">
-              <div class="brand-mark"></div>
-              <div class="brand-name">SunByte IT and Solar Solutions</div>
-            </div>
-            <p
-              style="
-                color: var(--sun-2);
-                font-weight: 600;
-                font-size: 14px;
-                margin: 12px 0 6px;
-              "
-            >
-              Clean Energy. Real Savings. Lasting Value.
-            </p>
-            <p>
-              We design smart, reliable solar systems that help homes and
-              businesses reduce electricity costs, increase energy independence,
-              and invest in a cleaner future.
-            </p>
-          </div>
           <div class="footer-col">
             <h4>Quick Links</h4>
-            <ul>
-              <li><a href="#services">Services</a></li>
-              <li><a href="#about">About</a></li>
+            <ul class="footer-links-row">
+              <li><a href="#solar">Solar</a></li>
+              <li><a href="#software">Software</a></li>
+              <li><a href="#ai-automation">AI Automation</a></li>
               <li><a href="#faq">FAQ</a></li>
-              <li><a href="#get-quote">Get a Quote</a></li>
+              <li><a href="#about">About Us</a></li>
+              <li><a href="#contact">Contact</a></li>
             </ul>
           </div>
           <div class="footer-col">
-            <h4>Contact</h4>
+            <h4>Connect</h4>
+            <ul class="footer-connect-grid">
+              <li>
+                <a href="https://www.facebook.com/profile.php?id=61592655008388" target="_blank" rel="noopener">
+                  <svg class="footer-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H16.7V3.6c-.28-.04-1.25-.12-2.37-.12-2.35 0-3.96 1.43-3.96 4.06v2.34H7.6v3.1h2.77V21h3.13z"/></svg>
+                  Facebook
+                </a>
+              </li>
+              <li>
+                <a href="https://suncore-solutions.com" target="_blank" rel="noopener">
+                  <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.8 5.7 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.7-3.8-9s1.3-6.5 3.8-9z"/></svg>
+                  Website
+                </a>
+              </li>
+              <li>
+                <a href="tel:+639671496191">
+                  <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h4l2 5-2.5 1.5a12 12 0 0 0 6 6L15 14l5 2v4a2 2 0 0 1-2 2C9.5 22 2 14.5 2 6a2 2 0 0 1 2-2z"/></svg>
+                  +63 967-149-6191
+                </a>
+              </li>
+              <li>
+                <a href="tel:+639286563785">
+                  <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h4l2 5-2.5 1.5a12 12 0 0 0 6 6L15 14l5 2v4a2 2 0 0 1-2 2C9.5 22 2 14.5 2 6a2 2 0 0 1 2-2z"/></svg>
+                  +63 928-656-3785
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Address</h4>
             <ul>
-              <li><a href="mailto:sales@suncore.net">sales@suncore.net</a></li>
-              <li><a href="tel:+639671496191">+63-967-149-6191</a></li>
-              <li><a href="tel:+6392256727431">+63-922-5672-7431</a></li>
-              <li>Brgy. Tagpos, Binangonan, Rizal</li>
+              <li>
+                <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
+                Sitio Wawa, Brgy. Tagpos, Binangonan, Rizal
+              </li>
+              <li>
+                <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
+                Valentin Street, Buenavista, Santiago City (Isabela)
+              </li>
             </ul>
           </div>
         </div>

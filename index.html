@@ -1046,6 +1046,9 @@
         margin: 0 0 14px;
         line-height: 1.4;
       }
+      .step[data-step="4"] .step-sub {
+        margin-bottom: 8px;
+      }
 
       .field {
         margin-bottom: 10px;
@@ -1211,7 +1214,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-top: 22px;
+        margin-top: 14px;
         gap: 12px;
         flex: none;
       }
@@ -1233,28 +1236,40 @@
       }
 
       .review-list {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
         margin-bottom: 6px;
       }
       .review-row {
         display: flex;
-        justify-content: space-between;
-        gap: 16px;
-        padding: 9px 12px;
+        flex-direction: column;
+        gap: 1px;
+        padding: 6px 10px;
         background: var(--surface-1);
         border: 1px solid var(--line);
-        border-radius: 10px;
-        font-size: 13px;
+        border-radius: 8px;
+        font-size: 12px;
+        min-width: 0;
+      }
+      .review-row.review-row-full {
+        grid-column: 1 / -1;
       }
       .review-key {
         color: var(--muted);
+        font-size: 10.5px;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
       }
       .review-val {
         color: var(--mist);
         font-weight: 500;
-        text-align: right;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .review-row-full .review-val {
+        white-space: normal;
       }
 
       .submit-status {
@@ -1486,8 +1501,8 @@
           <h1>Smarter Technology. Sustainable Energy.</h1>
           <p class="hero-sub">
             SunByte delivers intelligent software, AI-driven automation, and
-            customized solar solutions that help businesses and communities
-            work smarter, reduce costs, and build a more sustainable future.
+            customized solar solutions that help businesses and communities work
+            smarter, reduce costs, and build a more sustainable future.
           </p>
           <div class="hero-ctas">
             <a href="#get-quote" class="btn btn-primary">Get your free quote</a>
@@ -1513,7 +1528,10 @@
 
     <!-- ============ SERVICES ============ -->
     <!-- ============ CAPABILITIES ============ -->
-    <section id="capabilities-nav-targets" style="padding-bottom: 0; padding-top: 20px">
+    <section
+      id="capabilities-nav-targets"
+      style="padding-bottom: 0; padding-top: 20px"
+    >
       <div class="container">
         <div class="services-grid">
           <div class="service-card" id="solar">
@@ -1536,8 +1554,8 @@
             <div class="service-icon icon-green">🤖</div>
             <h3>AI &amp; Automation</h3>
             <p>
-              Intelligent automation solutions that eliminate repetitive
-              tasks and unlock new levels of productivity.
+              Intelligent automation solutions that eliminate repetitive tasks
+              and unlock new levels of productivity.
             </p>
           </div>
         </div>
@@ -1593,7 +1611,9 @@
       <div class="container">
         <div class="section-head">
           <div class="section-eyebrow">About Us</div>
-          <h2>Empowering Businesses Through Technology and Sustainable Energy</h2>
+          <h2>
+            Empowering Businesses Through Technology and Sustainable Energy
+          </h2>
         </div>
         <div class="about-grid">
           <div class="about-copy">
@@ -1604,8 +1624,8 @@
             </p>
             <p>
               We are committed to delivering innovative, reliable, and
-              sustainable solutions that help our customers work smarter,
-              reduce costs, and build a better future.
+              sustainable solutions that help our customers work smarter, reduce
+              costs, and build a better future.
             </p>
           </div>
         </div>
@@ -1615,8 +1635,7 @@
             <h3>Our Vision</h3>
             <p>
               To empower businesses and communities through intelligent
-              software, AI-driven automation, and sustainable solar
-              solutions.
+              software, AI-driven automation, and sustainable solar solutions.
             </p>
           </div>
           <div class="about-pillar">
@@ -1716,16 +1735,15 @@
             <p>
               At SunByte, we develop custom software solutions that help
               businesses streamline operations, improve productivity, and
-              accelerate growth. Whether you need a business management
-              system, web application, mobile app, or cloud-based platform,
-              we build reliable, scalable, and user-friendly solutions
-              tailored to your unique requirements.
+              accelerate growth. Whether you need a business management system,
+              web application, mobile app, or cloud-based platform, we build
+              reliable, scalable, and user-friendly solutions tailored to your
+              unique requirements.
             </p>
             <p>
-              Our development approach focuses on understanding your
-              business processes and delivering software that solves
-              real-world challenges — not generic, one-size-fits-all
-              applications.
+              Our development approach focuses on understanding your business
+              processes and delivering software that solves real-world
+              challenges — not generic, one-size-fits-all applications.
             </p>
           </div>
         </div>
@@ -1750,7 +1768,9 @@
             <h3 class="list-heading">Why Choose SunByte?</h3>
             <ul class="about-list">
               <li>Tailored solutions designed around your business needs</li>
-              <li>Scalable and secure applications built with modern technologies</li>
+              <li>
+                Scalable and secure applications built with modern technologies
+              </li>
               <li>User-friendly interfaces that enhance productivity</li>
               <li>Reliable support and continuous improvement</li>
               <li>Long-term technology partner committed to your success</li>
@@ -1760,8 +1780,8 @@
 
         <div class="section-cta">
           <p>
-            Let's build software that works for your business — today and
-            into the future.
+            Let's build software that works for your business — today and into
+            the future.
           </p>
         </div>
       </div>
@@ -1777,18 +1797,16 @@
         <div class="about-grid">
           <div class="about-copy">
             <p>
-              At SunByte, we help businesses transform the way they work
-              through AI-driven automation. By leveraging artificial
-              intelligence and intelligent workflows, we streamline
-              repetitive tasks, improve decision-making, and increase
-              operational efficiency — allowing your team to focus on what
-              matters most.
+              At SunByte, we help businesses transform the way they work through
+              AI-driven automation. By leveraging artificial intelligence and
+              intelligent workflows, we streamline repetitive tasks, improve
+              decision-making, and increase operational efficiency — allowing
+              your team to focus on what matters most.
             </p>
             <p>
-              Whether you're looking to automate customer interactions,
-              optimize business processes, or integrate AI into your
-              existing systems, we deliver practical solutions tailored to
-              your business goals.
+              Whether you're looking to automate customer interactions, optimize
+              business processes, or integrate AI into your existing systems, we
+              deliver practical solutions tailored to your business goals.
             </p>
           </div>
         </div>
@@ -1987,9 +2005,21 @@
           <div class="contact-card">
             <div class="contact-icon">📧</div>
             <h3>Email</h3>
-            <p><a href="mailto:info@sunbyte-solutions.com">info@sunbyte-solutions.com</a></p>
-            <p><a href="mailto:sales@sunbyte-solutions.com">sales@sunbyte-solutions.com</a></p>
-            <p><a href="mailto:support@sunbyte-solutions.com">support@sunbyte-solutions.com</a></p>
+            <p>
+              <a href="mailto:info@sunbyte-solutions.com"
+                >info@sunbyte-solutions.com</a
+              >
+            </p>
+            <p>
+              <a href="mailto:sales@sunbyte-solutions.com"
+                >sales@sunbyte-solutions.com</a
+              >
+            </p>
+            <p>
+              <a href="mailto:support@sunbyte-solutions.com"
+                >support@sunbyte-solutions.com</a
+              >
+            </p>
           </div>
           <div class="contact-card">
             <div class="contact-icon">📞</div>
@@ -2251,12 +2281,12 @@
 
                 <div class="review-list" id="reviewList"></div>
 
-                <p class="field-hint" style="margin: 2px 0 12px">
+                <p class="field-hint" style="margin: 0 0 6px">
                   🔒 Your details are used only to prepare your quote and are
                   never shared or sold.
                 </p>
 
-                <div id="turnstileContainer" style="margin: 6px 0 4px"></div>
+                <div id="turnstileContainer" style="margin: 0 0 2px"></div>
 
                 <div class="submit-status" id="submitStatus"></div>
               </div>
@@ -2304,26 +2334,73 @@
             <h4>Connect</h4>
             <ul class="footer-connect-grid">
               <li>
-                <a href="https://www.facebook.com/profile.php?id=61592655008388" target="_blank" rel="noopener">
-                  <svg class="footer-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H16.7V3.6c-.28-.04-1.25-.12-2.37-.12-2.35 0-3.96 1.43-3.96 4.06v2.34H7.6v3.1h2.77V21h3.13z"/></svg>
+                <a
+                  href="https://www.facebook.com/SunByteSolutions/"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <svg
+                    class="footer-icon"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H16.7V3.6c-.28-.04-1.25-.12-2.37-.12-2.35 0-3.96 1.43-3.96 4.06v2.34H7.6v3.1h2.77V21h3.13z"
+                    />
+                  </svg>
                   Facebook
                 </a>
               </li>
               <li>
-                <a href="https://suncore-solutions.com" target="_blank" rel="noopener">
-                  <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.8 5.7 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.7-3.8-9s1.3-6.5 3.8-9z"/></svg>
+                <a
+                  href="https://sunbyte-solutions.com"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <svg
+                    class="footer-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                  >
+                    <circle cx="12" cy="12" r="9" />
+                    <path
+                      d="M3 12h18M12 3c2.5 2.5 3.8 5.7 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.7-3.8-9s1.3-6.5 3.8-9z"
+                    />
+                  </svg>
                   Website
                 </a>
               </li>
               <li>
                 <a href="tel:+639671496191">
-                  <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h4l2 5-2.5 1.5a12 12 0 0 0 6 6L15 14l5 2v4a2 2 0 0 1-2 2C9.5 22 2 14.5 2 6a2 2 0 0 1 2-2z"/></svg>
+                  <svg
+                    class="footer-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                  >
+                    <path
+                      d="M4 4h4l2 5-2.5 1.5a12 12 0 0 0 6 6L15 14l5 2v4a2 2 0 0 1-2 2C9.5 22 2 14.5 2 6a2 2 0 0 1 2-2z"
+                    />
+                  </svg>
                   +63 967-149-6191
                 </a>
               </li>
               <li>
                 <a href="tel:+639286563785">
-                  <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h4l2 5-2.5 1.5a12 12 0 0 0 6 6L15 14l5 2v4a2 2 0 0 1-2 2C9.5 22 2 14.5 2 6a2 2 0 0 1 2-2z"/></svg>
+                  <svg
+                    class="footer-icon"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                  >
+                    <path
+                      d="M4 4h4l2 5-2.5 1.5a12 12 0 0 0 6 6L15 14l5 2v4a2 2 0 0 1-2 2C9.5 22 2 14.5 2 6a2 2 0 0 1 2-2z"
+                    />
+                  </svg>
                   +63 928-656-3785
                 </a>
               </li>
@@ -2333,12 +2410,34 @@
             <h4>Address</h4>
             <ul>
               <li>
-                <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
-                Sitio Wawa, Brgy. Tagpos, Binangonan, Rizal
+                <svg
+                  class="footer-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                >
+                  <path
+                    d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"
+                  />
+                  <circle cx="12" cy="10" r="2.4" />
+                </svg>
+                1. Rizal: Sitio Wawa, Brgy. Tagpos, Binangonan
               </li>
               <li>
-                <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
-                Valentin Street, Buenavista, Santiago City (Isabela)
+                <svg
+                  class="footer-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                >
+                  <path
+                    d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11z"
+                  />
+                  <circle cx="12" cy="10" r="2.4" />
+                </svg>
+                2. Isabela: Valentin Street, Buenavista, Santiago City
               </li>
             </ul>
           </div>
@@ -2617,19 +2716,19 @@
       function renderReview() {
         const d = state.data;
         const rows = [
-          ["Name", d.fullName],
-          ["Phone", d.phone.replace(/(\d{4})(\d{3})(\d{4})/, "$1 $2 $3")],
-          ["Email", d.email],
-          ["Address", d.address],
-          ["Building type", d.buildingType],
-          ["Monthly usage", `${d.kwhMonthly} kWh`],
-          ["Preferred setup", d.preferredSetup],
-          ["Message", d.message || "—"],
+          ["Name", d.fullName, false],
+          ["Phone", d.phone.replace(/(\d{4})(\d{3})(\d{4})/, "$1 $2 $3"), false],
+          ["Email", d.email, false],
+          ["Building type", d.buildingType, false],
+          ["Address", d.address, true],
+          ["Monthly usage", `${d.kwhMonthly} kWh`, false],
+          ["Preferred setup", d.preferredSetup, false],
+          ["Message", d.message || "—", true],
         ];
         document.getElementById("reviewList").innerHTML = rows
           .map(
-            ([k, v]) => `
-      <div class="review-row">
+            ([k, v, full]) => `
+      <div class="review-row${full ? " review-row-full" : ""}">
         <span class="review-key">${k}</span>
         <span class="review-val">${escapeHtml(String(v))}</span>
       </div>

@@ -1046,6 +1046,9 @@
         margin: 0 0 14px;
         line-height: 1.4;
       }
+      .step[data-step="4"] .step-sub {
+        margin-bottom: 8px;
+      }
 
       .field {
         margin-bottom: 10px;
@@ -1211,7 +1214,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-top: 22px;
+        margin-top: 14px;
         gap: 12px;
         flex: none;
       }
@@ -1233,28 +1236,40 @@
       }
 
       .review-list {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
         margin-bottom: 6px;
       }
       .review-row {
         display: flex;
-        justify-content: space-between;
-        gap: 16px;
-        padding: 9px 12px;
+        flex-direction: column;
+        gap: 1px;
+        padding: 6px 10px;
         background: var(--surface-1);
         border: 1px solid var(--line);
-        border-radius: 10px;
-        font-size: 13px;
+        border-radius: 8px;
+        font-size: 12px;
+        min-width: 0;
+      }
+      .review-row.review-row-full {
+        grid-column: 1 / -1;
       }
       .review-key {
         color: var(--muted);
+        font-size: 10.5px;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
       }
       .review-val {
         color: var(--mist);
         font-weight: 500;
-        text-align: right;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .review-row-full .review-val {
+        white-space: normal;
       }
 
       .submit-status {
@@ -2266,12 +2281,12 @@
 
                 <div class="review-list" id="reviewList"></div>
 
-                <p class="field-hint" style="margin: 2px 0 12px">
+                <p class="field-hint" style="margin: 0 0 6px">
                   🔒 Your details are used only to prepare your quote and are
                   never shared or sold.
                 </p>
 
-                <div id="turnstileContainer" style="margin: 6px 0 4px"></div>
+                <div id="turnstileContainer" style="margin: 0 0 2px"></div>
 
                 <div class="submit-status" id="submitStatus"></div>
               </div>
@@ -2701,19 +2716,19 @@
       function renderReview() {
         const d = state.data;
         const rows = [
-          ["Name", d.fullName],
-          ["Phone", d.phone.replace(/(\d{4})(\d{3})(\d{4})/, "$1 $2 $3")],
-          ["Email", d.email],
-          ["Address", d.address],
-          ["Building type", d.buildingType],
-          ["Monthly usage", `${d.kwhMonthly} kWh`],
-          ["Preferred setup", d.preferredSetup],
-          ["Message", d.message || "—"],
+          ["Name", d.fullName, false],
+          ["Phone", d.phone.replace(/(\d{4})(\d{3})(\d{4})/, "$1 $2 $3"), false],
+          ["Email", d.email, false],
+          ["Building type", d.buildingType, false],
+          ["Address", d.address, true],
+          ["Monthly usage", `${d.kwhMonthly} kWh`, false],
+          ["Preferred setup", d.preferredSetup, false],
+          ["Message", d.message || "—", true],
         ];
         document.getElementById("reviewList").innerHTML = rows
           .map(
-            ([k, v]) => `
-      <div class="review-row">
+            ([k, v, full]) => `
+      <div class="review-row${full ? " review-row-full" : ""}">
         <span class="review-key">${k}</span>
         <span class="review-val">${escapeHtml(String(v))}</span>
       </div>

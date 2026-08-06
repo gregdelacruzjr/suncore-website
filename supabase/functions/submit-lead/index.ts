@@ -17,8 +17,6 @@ const corsHeaders = {
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
-const DUPLICATE_WINDOW_MINUTES = 10;
-
 const REQUIRED_FIELDS = [
   "full_name",
   "email",
@@ -90,37 +88,6 @@ Deno.serve(async (req: Request) => {
       );
     }
 
-    // 3. Check for duplicate submissions within the configured time window
-    const tenMinutesAgo = new Date(Date.now() - DUPLICATE_WINDOW_MINUTES * 60 * 1000).toISOString();
-
-    const duplicateRes = await fetch(
-      `${SUPABASE_URL}/rest/v1/leads?select=id&email=eq.${encodeURIComponent(String(lead.email).trim().toLowerCase())}&created_at=gte.${tenMinutesAgo}`,
-      {
-        method: "GET",
-        headers: {
-          apikey: SERVICE_ROLE_KEY,
-          Authorization: `Bearer ${SERVICE_ROLE_KEY}`,
-        },
-      },
-    );
-
-    if (!duplicateRes.ok) {
-      const errText = await duplicateRes.text();
-      return new Response(JSON.stringify({ error: `Duplicate check failed: ${errText}` }), {
-        status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-
-    const duplicates = await duplicateRes.json();
-
-    if (duplicates.length > 0) {
-      return new Response(JSON.stringify({ success: true, duplicate: true, message: "We've already received your inquiry." }), {
-        status: 200,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
-    }
-
     // 3. Insert using the service role key — bypasses RLS, safe because this
     //    code only runs on the server and the key never reaches the browser.
     const insertRes = await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
@@ -133,7 +100,7 @@ Deno.serve(async (req: Request) => {
       },
       body: JSON.stringify({
         full_name: String(lead.full_name).slice(0, 200),
-        email: String(lead.email).trim().toLowerCase().slice(0, 200),
+        email: String(lead.email).slice(0, 200),
         address: String(lead.address).slice(0, 300),
         building_type: String(lead.building_type).slice(0, 50),
         kwh_monthly: kwh,

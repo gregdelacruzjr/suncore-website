@@ -118,6 +118,11 @@
         --shadow-card: 0 24px 60px -20px rgba(16, 26, 46, 0.16);
         --shadow-hero: 0 24px 60px -20px rgba(16, 26, 46, 0.18);
       }
+      @media (max-width: 640px) {
+        :root {
+          --nav-h: 52px;
+        }
+      }
       @media (prefers-reduced-motion: reduce) {
         :root {
           --theme-transition: none;
@@ -1107,6 +1112,32 @@
         outline: none;
         transition: border-color 0.2s, background 0.2s;
       }
+      .select-input {
+        width: 100%;
+        background: var(--surface-1);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 9px 12px;
+        color: var(--mist);
+        font-family: "Inter", sans-serif;
+        font-size: 14.5px;
+        outline: none;
+        transition: border-color 0.2s, background 0.2s;
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%238fa0c0' stroke-width='1.6'%3E%3Cpath d='M5 7l5 5 5-5'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 16px;
+        padding-right: 32px;
+      }
+      .select-input:focus {
+        border-color: var(--sun);
+        background-color: rgba(255, 178, 56, 0.05);
+      }
+      .select-input option {
+        background: var(--panel);
+        color: var(--mist);
+      }
       textarea {
         width: 100%;
         background: var(--surface-1);
@@ -1682,6 +1713,11 @@
             </p>
           </div>
         </div>
+
+        <div class="section-cta">
+          <p>Ready to see what solar can do for your property?</p>
+          <a href="#get-quote" class="btn btn-primary">Free Solar Quote</a>
+        </div>
       </div>
     </section>
 
@@ -1818,6 +1854,12 @@
             Let's build software that works for your business — today and into
             the future.
           </p>
+          <a
+            href="#tech-inquiry"
+            class="btn btn-primary"
+            onclick="window.presetTechCategory && window.presetTechCategory('Website/Mobile App')"
+            >Let's Build Your App</a
+          >
         </div>
       </div>
     </section>
@@ -1879,6 +1921,228 @@
             Unlock the power of AI and transform your business with smarter,
             more efficient automation.
           </p>
+          <a
+            href="#tech-inquiry"
+            class="btn btn-primary"
+            onclick="window.presetTechCategory && window.presetTechCategory('AI Integration')"
+            >Let's Automate It</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TECH INQUIRY (Software / AI) ============ -->
+    <section id="tech-inquiry" class="funnel-section">
+      <div class="container">
+        <div class="card">
+          <div class="corner-badge">
+            <svg class="arc-svg" viewBox="0 0 64 64">
+              <defs>
+                <linearGradient
+                  id="tiSunGradient"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="100%"
+                >
+                  <stop offset="0%" stop-color="#7CE7DC" />
+                  <stop offset="100%" stop-color="#4FD1C5" />
+                </linearGradient>
+              </defs>
+              <circle class="arc-track" cx="32" cy="32" r="26" />
+              <circle
+                id="tiArcFill"
+                class="arc-fill"
+                cx="32"
+                cy="32"
+                r="26"
+                stroke-dasharray="163.36"
+                stroke-dashoffset="163.36"
+                transform="rotate(-90 32 32)"
+                style="stroke: url(#tiSunGradient)"
+              />
+              <text
+                id="tiArcSun"
+                class="arc-sun"
+                x="32"
+                y="37"
+                text-anchor="middle"
+                font-size="16"
+              >
+                💡
+              </text>
+            </svg>
+            <div class="arc-title" id="tiArcTitle">Step 1 of 3</div>
+            <div class="arc-label" id="tiArcLabel">CHARGE 33%</div>
+          </div>
+          <div
+            id="tiStepAnnouncer"
+            aria-live="polite"
+            style="
+              position: absolute;
+              left: -9999px;
+              width: 1px;
+              height: 1px;
+              overflow: hidden;
+            "
+          ></div>
+
+          <form id="techForm" novalidate>
+            <div class="step-body" id="techStepBody">
+              <!-- STEP 1: Contact -->
+              <div class="step active" data-step="1">
+                <div class="step-eyebrow">Let's start with you</div>
+                <p class="funnel-step-title">Tell us who you are</p>
+                <p class="step-sub">
+                  We'll use this to get back to you about your project.
+                </p>
+
+                <div
+                  class="field"
+                  style="
+                    position: absolute;
+                    left: -9999px;
+                    width: 1px;
+                    height: 1px;
+                    overflow: hidden;
+                  "
+                  aria-hidden="true"
+                >
+                  <label for="tiCompany">Company</label>
+                  <input
+                    type="text"
+                    id="tiCompany"
+                    name="company"
+                    tabindex="-1"
+                    autocomplete="off"
+                  />
+                </div>
+
+                <div class="field" id="field-tiFullName">
+                  <label for="tiFullName">Full name</label>
+                  <input
+                    type="text"
+                    id="tiFullName"
+                    placeholder="Juan Dela Cruz"
+                    autocomplete="name"
+                  />
+                  <div class="error-text">Please enter your full name.</div>
+                </div>
+
+                <div class="field" id="field-tiPhone">
+                  <label for="tiPhone">Phone number</label>
+                  <input
+                    type="tel"
+                    id="tiPhone"
+                    inputmode="numeric"
+                    maxlength="11"
+                    placeholder="09XX XXX XXXX"
+                    autocomplete="tel"
+                  />
+                  <div class="error-text">
+                    Please enter a valid PH mobile number (11 digits, starting
+                    with 09).
+                  </div>
+                </div>
+
+                <div class="field" id="field-tiEmail">
+                  <label for="tiEmail">Email address</label>
+                  <input
+                    type="email"
+                    id="tiEmail"
+                    placeholder="you@email.com"
+                    autocomplete="email"
+                  />
+                  <div class="error-text">
+                    Please enter a valid email address.
+                  </div>
+                </div>
+
+                <div class="field" id="field-tiAddress">
+                  <label for="tiAddress">Address</label>
+                  <input
+                    type="text"
+                    id="tiAddress"
+                    placeholder="Street, City, Province"
+                    autocomplete="street-address"
+                  />
+                  <div class="error-text">Please enter your address.</div>
+                </div>
+              </div>
+
+              <!-- STEP 2: Project -->
+              <div class="step" data-step="2">
+                <div class="step-eyebrow">Tell us about the project</div>
+                <p class="funnel-step-title">What are you looking to build?</p>
+                <p class="step-sub">
+                  Pick the closest match, then describe what you need.
+                </p>
+
+                <div class="field" id="field-tiCategory">
+                  <label for="tiCategory">Project category</label>
+                  <select id="tiCategory" class="select-input">
+                    <option value="">Choose one...</option>
+                    <option value="Website/Mobile App">Website / Mobile App</option>
+                    <option value="Business Automation">Business Automation</option>
+                    <option value="AI Integration">AI Integration</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  <div class="error-text">Please choose a category.</div>
+                </div>
+
+                <div class="field" id="field-tiDescription">
+                  <label for="tiDescription">Describe your requirements</label>
+                  <textarea
+                    id="tiDescription"
+                    rows="4"
+                    placeholder="Tell us what you're trying to build or automate..."
+                  ></textarea>
+                  <div class="error-text">
+                    Please add a short description of your project.
+                  </div>
+                </div>
+              </div>
+
+              <!-- STEP 3: Review -->
+              <div class="step" data-step="3">
+                <div class="step-eyebrow">Almost there</div>
+                <p class="funnel-step-title">Review your details</p>
+                <p class="step-sub">
+                  Make sure everything looks right before we send it in.
+                </p>
+
+                <div class="review-list" id="tiReviewList"></div>
+
+                <p class="field-hint" style="margin: 0 0 6px">
+                  🔒 Your details are used only to get back to you about your
+                  project and are never shared or sold.
+                </p>
+
+                <div id="tiTurnstileContainer" style="margin: 0 0 2px"></div>
+
+                <div class="submit-status" id="tiSubmitStatus"></div>
+              </div>
+
+              <!-- SUCCESS -->
+              <div class="step" data-step="success">
+                <div class="success">
+                  <div class="success-mark">✓</div>
+                  <p class="funnel-step-title">We're on it.</p>
+                  <p>
+                    Thanks — your request has been sent. A SunByte specialist
+                    will reach out shortly to discuss your project.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="nav-row" id="tiNavRow">
+              <button type="button" class="btn-ghost" id="tiBackBtn">Back</button>
+              <button type="button" class="btn-primary" id="tiNextBtn">
+                Continue
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </section>
@@ -2534,6 +2798,7 @@
         } catch (e) {}
         updateThemeButtons();
         renderTurnstile(); // re-render widget so it matches the new theme
+        tiRenderTurnstile();
       }
 
       function toggleTheme() {
@@ -2610,7 +2875,10 @@
         });
       }
       // Called by the Turnstile script itself once it's finished loading (see script tag's ?onload= param)
-      window.onloadTurnstileCallback = renderTurnstile;
+      window.onloadTurnstileCallback = function () {
+        renderTurnstile();
+        tiRenderTurnstile();
+      };
 
       const state = {
         step: 1,
@@ -2934,6 +3202,298 @@
       });
 
       updateArc();
+
+      // ============ TECH INQUIRY WIZARD (Software / AI) ============
+      let tiTurnstileToken = null;
+      let tiTurnstileWidgetId = null;
+
+      function tiRenderTurnstile() {
+        const container = document.getElementById("tiTurnstileContainer");
+        if (!container || !window.turnstile) return;
+
+        if (tiTurnstileWidgetId !== null) {
+          try {
+            window.turnstile.remove(tiTurnstileWidgetId);
+          } catch (e) {}
+        }
+        tiTurnstileToken = null;
+        tiTurnstileWidgetId = window.turnstile.render(container, {
+          sitekey: TURNSTILE_SITE_KEY,
+          theme: getTheme(),
+          callback: (token) => {
+            tiTurnstileToken = token;
+          },
+          "expired-callback": () => {
+            tiTurnstileToken = null;
+          },
+        });
+      }
+
+      const tiState = {
+        step: 1,
+        totalSteps: 3,
+        data: {
+          fullName: "",
+          phone: "",
+          email: "",
+          address: "",
+          category: "",
+          description: "",
+        },
+      };
+
+      const tiArcFill = document.getElementById("tiArcFill");
+      const tiArcTitle = document.getElementById("tiArcTitle");
+      const tiArcLabel = document.getElementById("tiArcLabel");
+
+      function tiUpdateArc() {
+        const pct = Math.min(tiState.step / tiState.totalSteps, 1);
+        const offset = ARC_CIRCUMFERENCE * (1 - pct);
+        tiArcFill.style.strokeDashoffset = offset;
+        tiArcLabel.textContent = `CHARGE ${Math.round(pct * 100)}%`;
+        tiArcTitle.textContent =
+          tiState.step <= tiState.totalSteps
+            ? `Step ${tiState.step} of ${tiState.totalSteps}`
+            : "Complete";
+      }
+
+      const tiStepNames = {
+        1: "Your details",
+        2: "Your project",
+        3: "Review and submit",
+        success: "Request sent",
+      };
+      function tiAnnounceStep(stepKey) {
+        const announcer = document.getElementById("tiStepAnnouncer");
+        if (!announcer) return;
+        announcer.textContent =
+          stepKey === "success"
+            ? "Request sent successfully."
+            : `Step ${stepKey} of ${tiState.totalSteps}: ${
+                tiStepNames[stepKey] ?? ""
+              }`;
+      }
+
+      function tiShowStep(stepKey) {
+        document
+          .querySelectorAll('#techForm .step')
+          .forEach((el) => el.classList.remove("active"));
+        document
+          .querySelector(`#techForm .step[data-step="${stepKey}"]`)
+          .classList.add("active");
+        const navRow = document.getElementById("tiNavRow");
+        const backBtn = document.getElementById("tiBackBtn");
+        const nextBtn = document.getElementById("tiNextBtn");
+
+        if (stepKey === "success") {
+          navRow.style.display = "none";
+          return;
+        }
+        navRow.style.display = "flex";
+        backBtn.style.display = stepKey === 1 ? "none" : "inline-flex";
+        navRow.classList.toggle("align-fields", stepKey === 1);
+
+        if (stepKey === tiState.totalSteps) {
+          nextBtn.textContent = "Submit request";
+          tiRenderReview();
+        } else {
+          nextBtn.textContent = "Continue";
+        }
+
+        const activeStepEl = document.querySelector(
+          `#techForm .step[data-step="${stepKey}"]`
+        );
+        const firstField = activeStepEl?.querySelector(
+          "input:not([tabindex='-1']), select, textarea"
+        );
+        if (firstField) {
+          setTimeout(() => firstField.focus({ preventScroll: true }), 350);
+        }
+
+        tiAnnounceStep(stepKey);
+      }
+
+      function tiValidateStep(step) {
+        let valid = true;
+        if (step === 1) {
+          const fullName = document.getElementById("tiFullName").value.trim();
+          const phone = document.getElementById("tiPhone").value.trim();
+          const email = document.getElementById("tiEmail").value.trim();
+          const address = document.getElementById("tiAddress").value.trim();
+          const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+          const phoneOk = /^09\d{9}$/.test(phone);
+
+          setError("field-tiFullName", !fullName);
+          if (!fullName) valid = false;
+          setError("field-tiPhone", !phoneOk);
+          if (!phoneOk) valid = false;
+          setError("field-tiEmail", !emailOk);
+          if (!emailOk) valid = false;
+          setError("field-tiAddress", !address);
+          if (!address) valid = false;
+
+          tiState.data.fullName = fullName;
+          tiState.data.phone = phone;
+          tiState.data.email = email;
+          tiState.data.address = address;
+        }
+        if (step === 2) {
+          const category = document.getElementById("tiCategory").value;
+          const description = document
+            .getElementById("tiDescription")
+            .value.trim();
+
+          setError("field-tiCategory", !category);
+          if (!category) valid = false;
+          setError("field-tiDescription", !description);
+          if (!description) valid = false;
+
+          tiState.data.category = category;
+          tiState.data.description = description;
+        }
+        return valid;
+      }
+
+      function tiRenderReview() {
+        const d = tiState.data;
+        const rows = [
+          ["Name", d.fullName, false],
+          ["Phone", d.phone.replace(/(\d{4})(\d{3})(\d{4})/, "$1 $2 $3"), false],
+          ["Email", d.email, false],
+          ["Category", d.category, false],
+          ["Address", d.address, true],
+          ["Description", d.description, true],
+        ];
+        document.getElementById("tiReviewList").innerHTML = rows
+          .map(
+            ([k, v, full]) => `
+      <div class="review-row${full ? " review-row-full" : ""}">
+        <span class="review-key">${k}</span>
+        <span class="review-val">${escapeHtml(String(v))}</span>
+      </div>
+    `
+          )
+          .join("");
+      }
+
+      const tiPhoneInput = document.getElementById("tiPhone");
+      tiPhoneInput.addEventListener("input", () => {
+        tiPhoneInput.value = tiPhoneInput.value.replace(/\D/g, "").slice(0, 11);
+      });
+
+      ["tiFullName", "tiPhone", "tiEmail", "tiAddress"].forEach((id) => {
+        document
+          .getElementById(id)
+          .addEventListener("input", () => setError(`field-${id}`, false));
+      });
+      document.getElementById("tiCategory").addEventListener("change", () => {
+        setError("field-tiCategory", false);
+      });
+      document
+        .getElementById("tiDescription")
+        .addEventListener("input", () => {
+          setError("field-tiDescription", false);
+        });
+
+      // Lets the Software/AI section buttons pre-select a category before
+      // the visitor reaches step 2 of the wizard.
+      window.presetTechCategory = function (category) {
+        const select = document.getElementById("tiCategory");
+        if (select) select.value = category;
+      };
+
+      async function tiSubmitLead() {
+        const nextBtn = document.getElementById("tiNextBtn");
+        const statusEl = document.getElementById("tiSubmitStatus");
+        statusEl.style.display = "none";
+
+        const honeypot = document.getElementById("tiCompany").value.trim();
+        if (honeypot !== "") {
+          console.warn("Honeypot triggered — submission silently discarded.");
+          return true;
+        }
+
+        if (!tiTurnstileToken) {
+          statusEl.textContent =
+            "Please complete the verification check above.";
+          statusEl.style.display = "block";
+          return false;
+        }
+
+        nextBtn.disabled = true;
+        nextBtn.textContent = "Sending…";
+
+        const payload = {
+          turnstileToken: tiTurnstileToken,
+          full_name: tiState.data.fullName,
+          phone_number: tiState.data.phone,
+          email: tiState.data.email,
+          address: tiState.data.address,
+          inquiry_type: "software_ai",
+          category: tiState.data.category,
+          message: tiState.data.description,
+        };
+
+        try {
+          const res = await fetch(EDGE_FUNCTION_URL, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              apikey: SUPABASE_ANON_KEY,
+              Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+            },
+            body: JSON.stringify(payload),
+          });
+
+          const resData = await res.json().catch(() => ({}));
+
+          if (!res.ok) {
+            throw new Error(resData.error || `Request failed (${res.status})`);
+          }
+          return true;
+        } catch (err) {
+          statusEl.textContent = `Couldn't submit: ${err.message}`;
+          statusEl.style.display = "block";
+          nextBtn.disabled = false;
+          nextBtn.textContent = "Submit request";
+          if (window.turnstile && tiTurnstileWidgetId !== null)
+            window.turnstile.reset(tiTurnstileWidgetId);
+          tiTurnstileToken = null;
+          return false;
+        }
+      }
+
+      document.getElementById("tiNextBtn").addEventListener("click", async () => {
+        if (!tiValidateStep(tiState.step)) return;
+
+        if (tiState.step === tiState.totalSteps) {
+          const ok = await tiSubmitLead();
+          if (!ok) return;
+          tiShowStep("success");
+          tiUpdateArc();
+          return;
+        }
+
+        tiState.step += 1;
+        tiShowStep(tiState.step);
+        tiUpdateArc();
+      });
+
+      document.getElementById("tiBackBtn").addEventListener("click", () => {
+        if (tiState.step === 1) return;
+        tiState.step -= 1;
+        tiShowStep(tiState.step);
+        tiUpdateArc();
+      });
+
+      document.getElementById("techForm").addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && e.target.tagName === "INPUT") {
+          e.preventDefault();
+          document.getElementById("tiNextBtn").click();
+        }
+      });
+
+      tiUpdateArc();
 
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {

@@ -1,4 +1,4 @@
-const CACHE_NAME = "sunline-funnel-v2";
+const CACHE_NAME = "sunline-funnel-v3";
 const APP_SHELL = [
   "./index.html",
   "./manifest.json",
@@ -29,11 +29,24 @@ self.addEventListener("activate", (event) => {
   self.clients.claim();
 });
 
+// Notify all open tabs that a fresh copy of the HTML differs from what
+// was cached, so the page can decide to reload itself onto the new version.
+async function notifyClientsOfUpdate() {
+  const clients = await self.clients.matchAll({ type: "window" });
+  for (const client of clients) {
+    client.postMessage({ type: "SUNBYTE_UPDATE_AVAILABLE" });
+  }
+}
+
 // Fetch strategy:
 // - Never cache Supabase API calls (leads must always hit the network)
-// - Network-first for HTML/navigation requests, so a new deploy is served
-//   on the very next load instead of a stale cached shell. Falls back to
-//   the cached copy only when offline.
+// - Stale-while-revalidate for HTML/navigation requests: serve the cached
+//   copy instantly (fast, works offline), then fetch the latest version in
+//   the background. If the background fetch differs from what was cached,
+//   update the cache and tell open tabs so they can silently reload onto
+//   the new version — this way a deploy is picked up within one background
+//   refresh cycle instead of persisting indefinitely, without every load
+//   having to wait on a network round-trip first.
 // - Cache-first for everything else (icons, images, CSS/JS) since those
 //   rarely change and benefit from loading instantly / working offline.
 self.addEventListener("fetch", (event) => {
@@ -52,17 +65,35 @@ self.addEventListener("fetch", (event) => {
 
   if (isHTMLRequest) {
     event.respondWith(
-      fetch(event.request)
-        .then((response) => {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
-          return response;
-        })
-        .catch(
-          () =>
-            caches.match(event.request).then((cached) => cached) ||
-            caches.match("./index.html")
-        )
+      caches.match(event.request).then((cached) => {
+        const networkUpdate = fetch(event.request)
+          .then((response) => {
+            const clone = response.clone();
+            clone.text().then((freshText) => {
+              if (cached) {
+                cached
+                  .clone()
+                  .text()
+                  .then((cachedText) => {
+                    if (freshText !== cachedText) {
+                      caches
+                        .open(CACHE_NAME)
+                        .then((cache) => cache.put(event.request, response.clone()));
+                      notifyClientsOfUpdate();
+                    }
+                  });
+              } else {
+                caches.open(CACHE_NAME).then((cache) => cache.put(event.request, response.clone()));
+              }
+            });
+            return response;
+          })
+          .catch(() => null);
+
+        // Serve cached copy immediately if we have one; otherwise wait on
+        // the network (first-ever visit / cache cleared).
+        return cached || networkUpdate || caches.match("./index.html");
+      })
     );
     return;
   }

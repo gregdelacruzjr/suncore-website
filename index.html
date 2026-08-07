@@ -852,6 +852,12 @@
         border-top: 1px solid var(--line);
         text-align: center;
       }
+      .section-head-cta {
+        margin-top: 20px;
+      }
+      .column-cta {
+        margin-top: 20px;
+      }
       .section-cta p {
         color: var(--muted);
         font-size: 15px;
@@ -1741,6 +1747,9 @@
             independence from the grid, seamless backup power, or maximizing
             savings on your existing connection.
           </p>
+          <a href="#get-quote" class="btn btn-primary section-head-cta"
+            >Get Free Solar Quote</a
+          >
         </div>
         <div class="services-grid">
           <div class="service-card">
@@ -1770,14 +1779,6 @@
               during outages.
             </p>
           </div>
-        </div>
-
-        <div class="section-cta">
-          <p>
-            Ready to see what a custom solar setup could look like for your
-            property?
-          </p>
-          <a href="#get-quote" class="btn btn-primary">Get Free Solar Quote</a>
         </div>
       </div>
     </section>
@@ -1907,15 +1908,10 @@
               <li>Reliable support and continuous improvement</li>
               <li>Long-term technology partner committed to your success</li>
             </ul>
+            <a href="#build-inquiry" class="btn btn-teal column-cta"
+              >Build Your App</a
+            >
           </div>
-        </div>
-
-        <div class="section-cta">
-          <p>
-            Let's build software that works for your business — today and into
-            the future.
-          </p>
-          <a href="#build-inquiry" class="btn btn-teal">Build Your App</a>
         </div>
       </div>
     </section>
@@ -1969,15 +1965,10 @@
               <li>Scalable solutions that grow with your business</li>
               <li>Reliable support and continuous optimization</li>
             </ul>
+            <a href="#build-inquiry" class="btn btn-teal column-cta"
+              >Start Your AI Project</a
+            >
           </div>
-        </div>
-
-        <div class="section-cta">
-          <p>
-            Unlock the power of AI and transform your business with smarter,
-            more efficient automation.
-          </p>
-          <a href="#build-inquiry" class="btn btn-teal">Start Your AI Project</a>
         </div>
       </div>
     </section>
@@ -3472,6 +3463,17 @@
           navigator.serviceWorker.register("sw.js").catch((err) => {
             console.warn("Service worker registration failed:", err);
           });
+        });
+
+        // When the service worker detects the deployed HTML has changed,
+        // silently reload so the visitor gets the latest version without
+        // needing to hard-refresh. Guarded so it only fires once per load.
+        let sunbyteReloaded = false;
+        navigator.serviceWorker.addEventListener("message", (event) => {
+          if (event.data && event.data.type === "SUNBYTE_UPDATE_AVAILABLE" && !sunbyteReloaded) {
+            sunbyteReloaded = true;
+            window.location.reload();
+          }
         });
       }
     </script>

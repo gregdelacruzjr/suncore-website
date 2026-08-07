@@ -426,8 +426,28 @@
       }
       .hero-ctas {
         display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
+        flex-wrap: nowrap;
+        gap: 10px;
+      }
+      .hero-ctas .btn {
+        flex: 1 1 0;
+        min-width: 0;
+        white-space: normal;
+        text-align: center;
+        padding: 12px 10px;
+        font-size: 13px;
+        line-height: 1.2;
+      }
+      @media (max-width: 480px) {
+        .hero-ctas {
+          gap: 6px;
+        }
+        .hero-ctas .btn {
+          padding: 9px 5px;
+          font-size: 10.5px;
+          border-radius: 8px;
+          min-height: 42px;
+        }
       }
       .hero-visual {
         width: 100%;
@@ -521,6 +541,14 @@
         opacity: 0.6;
         cursor: not-allowed;
       }
+      .btn-teal {
+        background: linear-gradient(135deg, var(--sky), #0d9488);
+        color: #04211d;
+      }
+      .btn-teal:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
       .btn-ghost {
         background: transparent;
         color: var(--mist);
@@ -528,6 +556,10 @@
       }
       .btn-ghost:hover {
         border-color: rgba(232, 236, 244, 0.24);
+      }
+      .hero-ctas .btn-ghost {
+        background: var(--panel);
+        border: 1px solid var(--line);
       }
 
       /* ============ SERVICES ============ */
@@ -979,6 +1011,35 @@
         flex-direction: column;
         flex: 1;
         min-height: 0;
+      }
+      #buildForm {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-height: 0;
+      }
+      select {
+        width: 80%;
+        background: var(--surface-1);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 9px 12px;
+        color: var(--mist);
+        font-family: "Inter", sans-serif;
+        font-size: 14.5px;
+        outline: none;
+        transition: border-color 0.2s, background 0.2s;
+      }
+      select:focus {
+        border-color: var(--sun);
+        background: rgba(255, 178, 56, 0.05);
+      }
+      /* This funnel uses the teal "build" accent instead of the solar amber */
+      #build-inquiry input:focus,
+      #build-inquiry textarea:focus,
+      #build-inquiry select:focus {
+        border-color: var(--sky);
+        background: rgba(79, 209, 197, 0.08);
       }
       .step-body {
         flex: 1;
@@ -1584,7 +1645,8 @@
             smarter, reduce costs, and build a more sustainable future.
           </p>
           <div class="hero-ctas">
-            <a href="#get-quote" class="btn btn-primary">Get your free quote</a>
+            <a href="#get-quote" class="btn btn-primary">Get Free Solar Quote</a>
+            <a href="#build-inquiry" class="btn btn-teal">Let's Build Your App</a>
             <a href="#services" class="btn btn-ghost">See how it works</a>
           </div>
         </div>
@@ -1879,6 +1941,172 @@
             Unlock the power of AI and transform your business with smarter,
             more efficient automation.
           </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BUILD YOUR APP INQUIRY ============ -->
+    <section id="build-inquiry" class="funnel-section">
+      <div class="container">
+        <div class="card">
+          <div class="corner-badge">
+            <div class="arc-title" id="buildArcTitle">Step 1 of 2</div>
+          </div>
+          <div
+            id="buildStepAnnouncer"
+            aria-live="polite"
+            style="
+              position: absolute;
+              left: -9999px;
+              width: 1px;
+              height: 1px;
+              overflow: hidden;
+            "
+          ></div>
+
+          <form id="buildForm" novalidate>
+            <div class="step-body" id="buildStepBody">
+              <div
+                class="field"
+                style="
+                  position: absolute;
+                  left: -9999px;
+                  width: 1px;
+                  height: 1px;
+                  overflow: hidden;
+                "
+                aria-hidden="true"
+              >
+                <label for="buildCompany">Company</label>
+                <input
+                  type="text"
+                  id="buildCompany"
+                  name="company"
+                  tabindex="-1"
+                  autocomplete="off"
+                />
+              </div>
+
+              <!-- STEP 1: Contact -->
+              <div class="step active" data-step="1">
+                <div class="step-eyebrow">Let's start with you</div>
+                <p class="funnel-step-title">Tell us about yourself</p>
+                <p class="step-sub">We'll use this to follow up on your project.</p>
+
+                <div class="field" id="field-buildFullName">
+                  <label for="buildFullName">Full name</label>
+                  <input
+                    type="text"
+                    id="buildFullName"
+                    placeholder="Juan Dela Cruz"
+                    autocomplete="name"
+                  />
+                  <div class="error-text">Please enter your full name.</div>
+                </div>
+
+                <div class="field" id="field-buildEmail">
+                  <label for="buildEmail">Email address</label>
+                  <input
+                    type="email"
+                    id="buildEmail"
+                    placeholder="juan@email.com"
+                    autocomplete="email"
+                  />
+                  <div class="error-text">Please enter a valid email address.</div>
+                </div>
+
+                <div class="field" id="field-buildPhone">
+                  <label for="buildPhone">Phone number</label>
+                  <input
+                    type="tel"
+                    id="buildPhone"
+                    inputmode="numeric"
+                    maxlength="11"
+                    placeholder="09XX XXX XXXX"
+                    autocomplete="tel"
+                  />
+                  <div class="error-text">Please enter a valid PH mobile number.</div>
+                </div>
+
+                <div class="field" id="field-buildAddress">
+                  <label for="buildAddress">Address</label>
+                  <input
+                    type="text"
+                    id="buildAddress"
+                    placeholder="Street, Barangay, City"
+                    autocomplete="street-address"
+                  />
+                  <div class="error-text">Please enter your address.</div>
+                </div>
+              </div>
+
+              <!-- STEP 2: Project -->
+              <div class="step" data-step="2">
+                <div class="step-eyebrow">Tell us what you need</div>
+                <p class="funnel-step-title">What are we building?</p>
+                <p class="step-sub">
+                  Give us a quick overview — we'll follow up with details.
+                </p>
+
+                <div class="field" id="field-buildCategory">
+                  <label for="buildCategory">Category</label>
+                  <select id="buildCategory">
+                    <option value="" disabled selected>Select a category</option>
+                    <option value="Website">Website</option>
+                    <option value="Mobile App">Mobile App</option>
+                    <option value="Business Automation">Business Automation</option>
+                    <option value="AI Integration">AI Integration</option>
+                    <option value="Other">Other</option>
+                  </select>
+                  <div class="error-text">Please choose a category.</div>
+                </div>
+
+                <div class="field" id="field-buildDescription">
+                  <label for="buildDescription">Please describe your requirement</label>
+                  <textarea
+                    id="buildDescription"
+                    placeholder="What are you trying to build? Timeline, budget range, etc."
+                  ></textarea>
+                  <div class="error-text">Please describe your requirement.</div>
+                </div>
+
+                <p class="field-hint" style="margin: 0 0 6px">
+                  🔒 Your details are used only to follow up on your inquiry and
+                  are never shared or sold.
+                </p>
+
+                <div id="buildTurnstileContainer" style="margin: 0 0 2px"></div>
+
+                <div class="submit-status" id="buildSubmitStatus"></div>
+              </div>
+
+              <!-- SUCCESS -->
+              <div class="step" data-step="success">
+                <div class="success">
+                  <div class="success-mark">✓</div>
+                  <p class="funnel-step-title">Got it!</p>
+                  <p>
+                    Thanks — your inquiry has been sent. A SunByte specialist
+                    will reach out shortly to discuss your project.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="nav-row" id="buildNavRow">
+              <button
+                type="button"
+                class="btn-ghost"
+                id="buildBackBtn"
+                style="display: none"
+              >
+                Back
+              </button>
+              <button type="button" class="btn-teal" id="buildNextBtn">
+                Continue
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </section>
@@ -2534,6 +2762,7 @@
         } catch (e) {}
         updateThemeButtons();
         renderTurnstile(); // re-render widget so it matches the new theme
+        renderBuildTurnstile();
       }
 
       function toggleTheme() {
@@ -2610,7 +2839,10 @@
         });
       }
       // Called by the Turnstile script itself once it's finished loading (see script tag's ?onload= param)
-      window.onloadTurnstileCallback = renderTurnstile;
+      window.onloadTurnstileCallback = function () {
+        renderTurnstile();
+        renderBuildTurnstile();
+      };
 
       const state = {
         step: 1,
@@ -2934,6 +3166,275 @@
       });
 
       updateArc();
+
+      // ============ BUILD YOUR APP INQUIRY FORM ============
+      // Deliberately scoped to #build-inquiry and its own unique element IDs
+      // (buildFullName, buildNextBtn, etc.) rather than reusing .step /
+      // #nextBtn / #backBtn from the solar funnel above. The solar funnel's
+      // JS queries .step and button IDs globally (document-wide), so a
+      // second form sharing those names would silently break both forms —
+      // this was the cause of the earlier "form disappears on next step" bug.
+      const buildSection = document.getElementById("build-inquiry");
+
+      let buildTurnstileToken = null;
+      let buildTurnstileWidgetId = null;
+
+      function renderBuildTurnstile() {
+        const container = document.getElementById("buildTurnstileContainer");
+        if (!container || !window.turnstile) return;
+
+        if (buildTurnstileWidgetId !== null) {
+          try {
+            window.turnstile.remove(buildTurnstileWidgetId);
+          } catch (e) {}
+        }
+        buildTurnstileToken = null;
+        buildTurnstileWidgetId = window.turnstile.render(container, {
+          sitekey: TURNSTILE_SITE_KEY,
+          theme: getTheme(),
+          callback: (token) => {
+            buildTurnstileToken = token;
+          },
+          "expired-callback": () => {
+            buildTurnstileToken = null;
+          },
+        });
+      }
+
+      const buildState = {
+        step: 1,
+        totalSteps: 2,
+        data: {
+          fullName: "",
+          phone: "",
+          email: "",
+          address: "",
+          category: "",
+          description: "",
+        },
+      };
+
+      const buildStepNames = {
+        1: "Your details",
+        2: "Project details",
+        success: "Inquiry sent",
+      };
+
+      function announceBuildStep(stepKey) {
+        const announcer = document.getElementById("buildStepAnnouncer");
+        if (!announcer) return;
+        announcer.textContent =
+          stepKey === "success"
+            ? "Inquiry sent successfully."
+            : `Step ${stepKey} of ${buildState.totalSteps}: ${
+                buildStepNames[stepKey] ?? ""
+              }`;
+      }
+
+      function showBuildStep(stepKey) {
+        buildSection
+          .querySelectorAll(".step")
+          .forEach((el) => el.classList.remove("active"));
+        buildSection
+          .querySelector(`.step[data-step="${stepKey}"]`)
+          .classList.add("active");
+
+        const navRow = document.getElementById("buildNavRow");
+        const backBtn = document.getElementById("buildBackBtn");
+        const nextBtn = document.getElementById("buildNextBtn");
+        const arcTitle = document.getElementById("buildArcTitle");
+
+        arcTitle.textContent =
+          stepKey <= buildState.totalSteps
+            ? `Step ${stepKey} of ${buildState.totalSteps}`
+            : "Complete";
+
+        if (stepKey === "success") {
+          navRow.style.display = "none";
+          announceBuildStep(stepKey);
+          return;
+        }
+        navRow.style.display = "flex";
+        backBtn.style.display = stepKey === 1 ? "none" : "inline-flex";
+        navRow.classList.toggle("align-fields", stepKey === 1);
+        nextBtn.textContent =
+          stepKey === buildState.totalSteps ? "Submit inquiry" : "Continue";
+
+        const activeStepEl = buildSection.querySelector(
+          `.step[data-step="${stepKey}"]`
+        );
+        const firstField = activeStepEl?.querySelector(
+          "input:not([tabindex='-1']), select, textarea"
+        );
+        if (firstField) {
+          setTimeout(() => firstField.focus({ preventScroll: true }), 350);
+        }
+        announceBuildStep(stepKey);
+      }
+
+      function setBuildError(fieldId, show) {
+        const el = document.getElementById(fieldId);
+        if (!el) return;
+        el.classList.toggle("invalid", show);
+        if (show) {
+          el.classList.remove("shake");
+          void el.offsetWidth; // restart animation if triggered again
+          el.classList.add("shake");
+        }
+      }
+
+      function validateBuildStep(step) {
+        let valid = true;
+        if (step === 1) {
+          const fullName = document.getElementById("buildFullName").value.trim();
+          const phone = document.getElementById("buildPhone").value.trim();
+          const email = document.getElementById("buildEmail").value.trim();
+          const address = document.getElementById("buildAddress").value.trim();
+          const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+          const phoneOk = /^09\d{9}$/.test(phone);
+
+          setBuildError("field-buildFullName", !fullName);
+          if (!fullName) valid = false;
+          setBuildError("field-buildPhone", !phoneOk);
+          if (!phoneOk) valid = false;
+          setBuildError("field-buildEmail", !emailOk);
+          if (!emailOk) valid = false;
+          setBuildError("field-buildAddress", !address);
+          if (!address) valid = false;
+
+          buildState.data.fullName = fullName;
+          buildState.data.phone = phone;
+          buildState.data.email = email;
+          buildState.data.address = address;
+        }
+        if (step === 2) {
+          const category = document.getElementById("buildCategory").value;
+          const categoryOk = !!category;
+          setBuildError("field-buildCategory", !categoryOk);
+          if (!categoryOk) valid = false;
+
+          const description = document
+            .getElementById("buildDescription")
+            .value.trim();
+          setBuildError("field-buildDescription", !description);
+          if (!description) valid = false;
+
+          buildState.data.category = category;
+          buildState.data.description = description;
+        }
+        return valid;
+      }
+
+      document.getElementById("buildPhone").addEventListener("input", (e) => {
+        e.target.value = e.target.value.replace(/\D/g, "").slice(0, 11);
+      });
+      ["buildFullName", "buildPhone", "buildEmail", "buildAddress"].forEach(
+        (id) => {
+          document
+            .getElementById(id)
+            .addEventListener("input", () => setBuildError(`field-${id}`, false));
+        }
+      );
+      document
+        .getElementById("buildCategory")
+        .addEventListener("change", () =>
+          setBuildError("field-buildCategory", false)
+        );
+      document
+        .getElementById("buildDescription")
+        .addEventListener("input", () =>
+          setBuildError("field-buildDescription", false)
+        );
+
+      async function submitBuildLead() {
+        const nextBtn = document.getElementById("buildNextBtn");
+        const statusEl = document.getElementById("buildSubmitStatus");
+        statusEl.style.display = "none";
+
+        const honeypot = document.getElementById("buildCompany").value.trim();
+        if (honeypot !== "") {
+          console.warn("Honeypot triggered — submission silently discarded.");
+          return true;
+        }
+
+        if (!buildTurnstileToken) {
+          statusEl.textContent =
+            "Please complete the verification check above.";
+          statusEl.style.display = "block";
+          return false;
+        }
+
+        nextBtn.disabled = true;
+        nextBtn.textContent = "Sending…";
+
+        const payload = {
+          turnstileToken: buildTurnstileToken,
+          inquiry_type: "software",
+          full_name: buildState.data.fullName,
+          phone_number: buildState.data.phone,
+          email: buildState.data.email,
+          address: buildState.data.address,
+          category: buildState.data.category,
+          message: buildState.data.description,
+        };
+
+        try {
+          const res = await fetch(EDGE_FUNCTION_URL, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              apikey: SUPABASE_ANON_KEY,
+              Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+            },
+            body: JSON.stringify(payload),
+          });
+
+          const resData = await res.json().catch(() => ({}));
+
+          if (!res.ok) {
+            throw new Error(resData.error || `Request failed (${res.status})`);
+          }
+          return true;
+        } catch (err) {
+          statusEl.textContent = `Couldn't submit: ${err.message}`;
+          statusEl.style.display = "block";
+          nextBtn.disabled = false;
+          nextBtn.textContent = "Submit inquiry";
+          if (window.turnstile && buildTurnstileWidgetId !== null)
+            window.turnstile.reset(buildTurnstileWidgetId);
+          buildTurnstileToken = null;
+          return false;
+        }
+      }
+
+      document
+        .getElementById("buildNextBtn")
+        .addEventListener("click", async () => {
+          if (!validateBuildStep(buildState.step)) return;
+
+          if (buildState.step === buildState.totalSteps) {
+            const ok = await submitBuildLead();
+            if (!ok) return;
+            showBuildStep("success");
+            return;
+          }
+
+          buildState.step += 1;
+          showBuildStep(buildState.step);
+        });
+
+      document.getElementById("buildBackBtn").addEventListener("click", () => {
+        if (buildState.step === 1) return;
+        buildState.step -= 1;
+        showBuildStep(buildState.step);
+      });
+
+      document.getElementById("buildForm").addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && e.target.tagName === "INPUT") {
+          e.preventDefault();
+          document.getElementById("buildNextBtn").click();
+        }
+      });
 
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {

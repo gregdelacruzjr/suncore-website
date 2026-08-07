@@ -1,4 +1,4 @@
-const CACHE_NAME = "sunline-funnel-v1";
+const CACHE_NAME = "sunline-funnel-v2";
 const APP_SHELL = [
   "./index.html",
   "./manifest.json",
@@ -31,7 +31,11 @@ self.addEventListener("activate", (event) => {
 
 // Fetch strategy:
 // - Never cache Supabase API calls (leads must always hit the network)
-// - Cache-first for the app shell (HTML/CSS/JS/icons) so it loads instantly + offline
+// - Network-first for HTML/navigation requests, so a new deploy is served
+//   on the very next load instead of a stale cached shell. Falls back to
+//   the cached copy only when offline.
+// - Cache-first for everything else (icons, images, CSS/JS) since those
+//   rarely change and benefit from loading instantly / working offline.
 self.addEventListener("fetch", (event) => {
   const url = new URL(event.request.url);
 
@@ -41,6 +45,27 @@ self.addEventListener("fetch", (event) => {
   }
 
   if (event.request.method !== "GET") return;
+
+  const isHTMLRequest =
+    event.request.mode === "navigate" ||
+    (event.request.headers.get("accept") || "").includes("text/html");
+
+  if (isHTMLRequest) {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+          return response;
+        })
+        .catch(
+          () =>
+            caches.match(event.request).then((cached) => cached) ||
+            caches.match("./index.html")
+        )
+    );
+    return;
+  }
 
   event.respondWith(
     caches.match(event.request).then((cached) => {

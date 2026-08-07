@@ -426,8 +426,28 @@
       }
       .hero-ctas {
         display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
+        flex-wrap: nowrap;
+        gap: 10px;
+      }
+      .hero-ctas .btn {
+        flex: 1 1 0;
+        min-width: 0;
+        white-space: normal;
+        text-align: center;
+        padding: 12px 10px;
+        font-size: 13px;
+        line-height: 1.2;
+      }
+      @media (max-width: 480px) {
+        .hero-ctas {
+          gap: 6px;
+        }
+        .hero-ctas .btn {
+          padding: 9px 5px;
+          font-size: 10.5px;
+          border-radius: 8px;
+          min-height: 42px;
+        }
       }
       .hero-visual {
         width: 100%;
@@ -536,6 +556,10 @@
       }
       .btn-ghost:hover {
         border-color: rgba(232, 236, 244, 0.24);
+      }
+      .hero-ctas .btn-ghost {
+        background: var(--panel);
+        border: 1px solid var(--line);
       }
 
       /* ============ SERVICES ============ */

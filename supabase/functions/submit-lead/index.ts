@@ -17,14 +17,14 @@ const corsHeaders = {
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
-const REQUIRED_FIELDS = [
-  "full_name",
-  "email",
-  "address",
-  "building_type",
-  "kwh_monthly",
-  "preferred_setup",
-];
+// Fields required for every lead, regardless of inquiry type
+const COMMON_REQUIRED_FIELDS = ["full_name", "email", "address", "phone_number"];
+
+// Additional fields required per inquiry_type
+const REQUIRED_FIELDS_BY_TYPE: Record<string, string[]> = {
+  solar: ["building_type", "kwh_monthly", "preferred_setup"],
+  software: ["category", "message"],
+};
 
 Deno.serve(async (req: Request) => {
   if (req.method === "OPTIONS") {
@@ -70,8 +70,21 @@ Deno.serve(async (req: Request) => {
       );
     }
 
+    // Default to "solar" for backward compatibility with older form submissions
+    // that don't send inquiry_type at all.
+    const inquiryType = lead.inquiry_type ? String(lead.inquiry_type) : "solar";
+    const typeSpecificFields = REQUIRED_FIELDS_BY_TYPE[inquiryType];
+
+    if (!typeSpecificFields) {
+      return new Response(
+        JSON.stringify({ error: `Unknown inquiry_type: ${inquiryType}` }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+      );
+    }
+
     // 2. Validate required fields server-side (never trust the client)
-    for (const field of REQUIRED_FIELDS) {
+    const requiredFields = [...COMMON_REQUIRED_FIELDS, ...typeSpecificFields];
+    for (const field of requiredFields) {
       if (lead[field] === undefined || lead[field] === null || lead[field] === "") {
         return new Response(
           JSON.stringify({ error: `Missing required field: ${field}` }),
@@ -80,10 +93,23 @@ Deno.serve(async (req: Request) => {
       }
     }
 
-    const kwh = Number(lead.kwh_monthly);
-    if (!Number.isFinite(kwh) || kwh <= 0 || kwh > 100000) {
+    // kwh_monthly range check only applies to solar leads
+    let kwh: number | null = null;
+    if (inquiryType === "solar") {
+      kwh = Number(lead.kwh_monthly);
+      if (!Number.isFinite(kwh) || kwh <= 0 || kwh > 100000) {
+        return new Response(
+          JSON.stringify({ error: "kwh_monthly is out of range." }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+        );
+      }
+    }
+
+    // Validate PH mobile number format server-side (never trust the client)
+    const phoneNumber = String(lead.phone_number);
+    if (!/^09\d{9}$/.test(phoneNumber)) {
       return new Response(
-        JSON.stringify({ error: "kwh_monthly is out of range." }),
+        JSON.stringify({ error: "phone_number must be a valid PH mobile number." }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
       );
     }
@@ -102,9 +128,12 @@ Deno.serve(async (req: Request) => {
         full_name: String(lead.full_name).slice(0, 200),
         email: String(lead.email).slice(0, 200),
         address: String(lead.address).slice(0, 300),
-        building_type: String(lead.building_type).slice(0, 50),
+        phone_number: phoneNumber.slice(0, 20),
+        inquiry_type: inquiryType.slice(0, 50),
+        building_type: lead.building_type ? String(lead.building_type).slice(0, 50) : null,
         kwh_monthly: kwh,
-        preferred_setup: String(lead.preferred_setup).slice(0, 50),
+        preferred_setup: lead.preferred_setup ? String(lead.preferred_setup).slice(0, 50) : null,
+        category: lead.category ? String(lead.category).slice(0, 50) : null,
         message: lead.message ? String(lead.message).slice(0, 1000) : null,
       }),
     });

@@ -1558,6 +1558,16 @@
         width: 17px;
         height: 17px;
       }
+      .footer-social-btn-disabled {
+        opacity: 0.45;
+        cursor: default;
+        pointer-events: none;
+      }
+      .footer-social-btn-disabled:hover {
+        background: var(--surface-1);
+        border-color: var(--line);
+        color: var(--mist);
+      }
       .footer-bottom {
         display: flex;
         flex-direction: column;
@@ -2726,6 +2736,23 @@
                 </svg>
                 +63 928-656-3785
               </li>
+              <li>
+                <svg
+                  class="footer-icon"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                >
+                  <path
+                    d="M3 5h18v14H3z"
+                  />
+                  <path
+                    d="M3 6l9 7 9-7"
+                  />
+                </svg>
+                <a href="mailto:info@sunbyte-solutions.com">info@sunbyte-solutions.com</a>
+              </li>
             </ul>
           </div>
           <div class="footer-col">
@@ -2797,6 +2824,21 @@
                   <circle cx="17.2" cy="6.8" r="0.6" fill="currentColor" stroke="none" />
                 </svg>
               </a>
+              <span
+                class="footer-social-btn footer-social-btn-disabled"
+                aria-label="YouTube (coming soon)"
+                title="YouTube — coming soon"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                >
+                  <rect x="2.5" y="6" width="19" height="12" rx="3.5" />
+                  <path d="M10.5 9.8v4.4l4-2.2z" fill="currentColor" stroke="none" />
+                </svg>
+              </span>
             </div>
           </div>
         </div>

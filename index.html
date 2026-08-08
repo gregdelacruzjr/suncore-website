@@ -555,6 +555,45 @@
         opacity: 0.6;
         cursor: not-allowed;
       }
+      .cta-shimmer {
+        position: relative;
+        overflow: hidden;
+      }
+      .cta-shimmer::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -60%;
+        width: 40%;
+        height: 100%;
+        background: linear-gradient(
+          120deg,
+          transparent,
+          rgba(255, 255, 255, 0.45),
+          transparent
+        );
+        animation: cta-shimmer-sweep 3.2s ease-in-out infinite;
+      }
+      @keyframes cta-shimmer-sweep {
+        0% {
+          left: -60%;
+        }
+        40% {
+          left: 120%;
+        }
+        100% {
+          left: 120%;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .cta-shimmer::after {
+          animation: none;
+          display: none;
+        }
+      }
+      .cta-shimmer-offset::after {
+        animation-delay: 1.6s;
+      }
       .btn-ghost {
         background: transparent;
         color: var(--mist);
@@ -1689,8 +1728,8 @@
             smarter, reduce costs, and build a more sustainable future.
           </p>
           <div class="hero-ctas">
-            <a href="#get-quote" class="btn btn-primary">Get Free Solar Quote</a>
-            <a href="#build-inquiry" class="btn btn-teal">Let's Build Your App</a>
+            <a href="#get-quote" class="btn btn-primary cta-shimmer">Get Free Solar Quote</a>
+            <a href="#build-inquiry" class="btn btn-teal cta-shimmer cta-shimmer-offset">Let's Build Your App</a>
             <a href="#services" class="btn btn-ghost">See how it works</a>
           </div>
         </div>
@@ -1762,7 +1801,7 @@
             Ready to see what a custom solar setup could look like for your
             property?
           </p>
-          <a href="#get-quote" class="btn btn-primary section-head-cta"
+          <a href="#get-quote" class="btn btn-primary section-head-cta cta-shimmer"
             >Get Free Solar Quote</a
           >
         </div>
@@ -1927,7 +1966,7 @@
               Let's build software that works for your business — today and
               into the future.
             </p>
-            <a href="#build-inquiry" class="btn btn-teal column-cta"
+            <a href="#build-inquiry" class="btn btn-teal column-cta cta-shimmer"
               >Build Your App</a
             >
           </div>
@@ -1988,7 +2027,7 @@
               Unlock the power of AI and transform your business with smarter,
               more efficient automation.
             </p>
-            <a href="#build-inquiry" class="btn btn-teal column-cta"
+            <a href="#build-inquiry" class="btn btn-teal column-cta cta-shimmer"
               >Start Your AI Project</a
             >
           </div>

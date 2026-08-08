@@ -1,34 +1,7 @@
-A. Modify the buttons in the hero section as follows:
-
-Button 1: Free Solar Quote
-Button 2: Let's Build Your App
-Button 3: How It Works?
-
-Buttons must be in the same row without breaking the original layout.
-
-Button 2 will be linked to a new section.  This section should be able to:
-  Allow the user input his/her name, company name, address, phone, email,
-  and the description of the software requirements. Allow the user to describe
-  the requirement up to a maximum of 500 words.
-
-  Insert a cloudfare captcha before submission. 
- 
-  Use the leads table. Classify the records as Solar and Software.
-
-  Since each record is processed by Google Gemini AI, tell me how this
-  new requirement will be handled.
-
-B. Remove the Get a Quote from the top nav bar
-
-c. At the end of the Solar section, insert Free Solar Quote button
-
-d. At the end of the Software section, insert Let's Build Your App button
- 
-e. At the end of the AI & Automation section, insert Let's Build Your App button
- 
-
-
-
-
- 
+To do:
+A. Top Nav Bar
+ 1. Add a CTA button labelled "Build Your App"
+ 2. Apply a Shimmer sweep animation to the CTA buttons. 
+    But what is your idea about those CTAs in the top nav bar? Will they be animated too?  
+   
 

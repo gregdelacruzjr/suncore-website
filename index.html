@@ -3011,10 +3011,11 @@
       }
 
       function showStep(stepKey) {
-        document
+        const funnelForm = document.getElementById("funnelForm");
+        funnelForm
           .querySelectorAll(".step")
           .forEach((el) => el.classList.remove("active"));
-        document
+        funnelForm
           .querySelector(`.step[data-step="${stepKey}"]`)
           .classList.add("active");
         const navRow = document.getElementById("navRow");
@@ -3037,7 +3038,7 @@
         }
 
         // Auto-focus the first interactive field for faster keyboard flow
-        const activeStepEl = document.querySelector(
+        const activeStepEl = funnelForm.querySelector(
           `.step[data-step="${stepKey}"]`
         );
         const firstField = activeStepEl?.querySelector(

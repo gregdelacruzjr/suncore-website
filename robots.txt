@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sunbyte-solutions.com/sitemap.xml
+Sitemap: https://www.sunbyte-solutions.com/sitemap.xml
